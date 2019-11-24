@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import in.chetanmehra.minimum.Players.Player;
 import in.chetanmehra.minimum.engine.AbstractGameController;
 
+
 public class TouchController implements GestureDetector.GestureListener {
     private AbstractGameController gameController;
 
@@ -21,35 +22,28 @@ public class TouchController implements GestureDetector.GestureListener {
 
         Vector3 input = new Vector3(x, y, 0.0f);
         gameController.getCamera().unproject(input);
-/*
-        Player mainPlayer=gameController.getMainPlayer();
-        int decksize=mainPlayer.getMyDeck().count();
-        for(int i=0;i<decksize;i++)
-        {
-            if(mainPlayer.getCardByIndex(i).getBoundingRectangle().contains(x,y))
-            {
-                Gdx.app.debug("Tapped Card",mainPlayer.getName()+mainPlayer.getCardByIndex(i).getCardValue()+mainPlayer.getCardByIndex(i).getSuit());
-            }
-        }
-        */
-        return true;
+
+        Gdx.app.log("Touch Controller", "Inside touch down method");
+
+        return false;
     }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
         Vector3 input = new Vector3(x, y, 0.0f);
         gameController.getCamera().unproject(input);
-/*
-        Player mainPlayer=gameController.getMainPlayer();
-        int decksize=mainPlayer.getMyDeck().count();
-        for(int i=0;i<decksize;i++)
-        {
-            if(mainPlayer.getCardByIndex(i).getBoundingRectangle().contains(x,y))
-            {
-                Gdx.app.debug("Tapped Card",mainPlayer.getName()+mainPlayer.getCardByIndex(i).getCardValue()+mainPlayer.getCardByIndex(i).getSuit());
+        Gdx.app.log("Touch Controller", "Inside tap method");
+
+        Player mainPlayer = gameController.getMainPlayer();
+        int decksize = mainPlayer.getMyDeck().count();
+        for (int i = 0; i < decksize; i++) {
+            if (mainPlayer.getCardByIndex(i).getBoundingRectangle().contains(input.x, input.y)) {
+                gameController.mainPlayerCardTapped(i, false);
+            } else if (gameController.getDealtDeck().getTopCard() != null && gameController.getDealtDeck().getTopCard().getBoundingRectangle().contains(input.x, input.y)) {
+                gameController.topCardOfDealtDeckTapped(false);
             }
         }
-        */
+
         return true;
     }
 
@@ -58,8 +52,9 @@ public class TouchController implements GestureDetector.GestureListener {
 
         Vector3 input = new Vector3(x, y, 0.0f);
         gameController.getCamera().unproject(input);
-
-      /*  Player mainPlayer=gameController.getMainPlayer();
+        Gdx.app.log("Touch Controller", "Inside long press method");
+        /*
+        Player mainPlayer=gameController.getMainPlayer();
         int decksize=mainPlayer.getMyDeck().count();
         for(int i=0;i<decksize;i++)
         {
@@ -67,8 +62,9 @@ public class TouchController implements GestureDetector.GestureListener {
             {
                 Gdx.app.debug("Tapped Card",mainPlayer.getName()+mainPlayer.getCardByIndex(i).getCardValue()+mainPlayer.getCardByIndex(i).getSuit());
             }
-        }*/
-        return true;
+        }
+        */
+        return false;
     }
 
     @Override
@@ -101,3 +97,4 @@ public class TouchController implements GestureDetector.GestureListener {
 
     }
 }
+

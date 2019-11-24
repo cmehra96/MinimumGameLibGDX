@@ -43,7 +43,7 @@ public class GamePlayScreen extends AbstractScreen {
     }
 
     public void show() {
-        Gdx.app.log(TAG, "Enters show method");
+        //    Gdx.app.log(TAG, "Enters show method");
         Image backgroundImage = new Image(assests.manager.get(Assests.backgroundImageTexture));
         backgroundImage.setSize(width, height);
         stage.addActor(backgroundImage);
@@ -51,11 +51,11 @@ public class GamePlayScreen extends AbstractScreen {
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(new GestureDetector(new TouchController(gameController)));
         Gdx.input.setInputProcessor(multiplexer);
-        Gdx.app.log(TAG, "Executed show method succussfully");
+        //   Gdx.app.log(TAG, "Executed show method succussfully");
     }
 
     public void render(float delta) {
-        Gdx.app.log(TAG, "Enters render method");
+        // Gdx.app.log(TAG, "Enters render method");
         Gdx.gl.glClearColor(0.187f, 0.246f, 0.621f, 1.0f);
         Gdx.gl.glClear(16384);
         batch.setProjectionMatrix(camera.combined);
@@ -68,6 +68,6 @@ public class GamePlayScreen extends AbstractScreen {
         gameDrawer.drawPlayerDeck(gameController.getPlayers());
         batch.end();
 
-        Gdx.app.log(TAG, "render metod executed succussfully");
+        //   Gdx.app.log(TAG, "render metod executed succussfully");
     }
 }

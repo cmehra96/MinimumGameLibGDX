@@ -52,4 +52,8 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public Card removeCard(Card card) {
+        return myDeck.removeCard(card);
+    }
 }

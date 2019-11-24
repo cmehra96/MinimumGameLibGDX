@@ -90,9 +90,40 @@ public class Deck {
 
     }
 
+    /**
+     * Method to get Top card of deck
+     *
+     * @return top card of deck
+     */
+    public Card getTopCard() {
+        if (count() == 0)
+            return null;
+        return deck.get(count() - 1);
+    }
+
+    /**
+     * Method to remove top card from deck
+     *
+     * @return top card of deck
+     */
+    public Card removeTopCard() {
+        Card topCard = getTopCard();
+        if (topCard == null) {
+            return null;
+        }
+        deck.remove(count() - 1);
+        return topCard;
+    }
+
     public int count() {
         return deck.size();
     }
 
 
+    public Card removeCard(Card card) {
+        int index = deck.indexOf(card);
+        return deck.remove(index);
+
+
+    }
 }

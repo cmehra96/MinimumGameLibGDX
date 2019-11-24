@@ -1,16 +1,13 @@
 package in.chetanmehra.minimum.GameHelpers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
-import in.chetanmehra.minimum.Game;
 import in.chetanmehra.minimum.Players.Player;
 
 public class GameDrawer {
@@ -28,8 +25,8 @@ public class GameDrawer {
 
     public void drawDealtDeck(Deck dealtDeck) {
         int size = dealtDeck.getSize();
-        Card card = dealtDeck.getCardByIndex(0);
-        card.setCardToShowBack();
+        Card card = dealtDeck.getTopCard();
+        card.setCardToShowFront();
         card.setOriginCenter();
         card.setRotation(0.0f);
         card.setPosition((screen_width / 2 - card.getWidth()), (screen_height / 2 - card.getHeight() / 2));

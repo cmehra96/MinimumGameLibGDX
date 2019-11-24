@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 
 import java.util.ArrayList;
 
+import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
 import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.Players.Player;
@@ -25,6 +26,12 @@ public abstract class AbstractGameController {
         dealtDeck.allocateDeck();
         this.discardedDeck = new Deck(assests);
     }
+
+    public abstract void mainPlayerCardTapped(int cardindex, boolean longPressed);
+
+    public abstract void topCardOfDealtDeckTapped(boolean longPressed);
+
+    public abstract void topCardOfDiscardedDeckTapped(boolean longPressed);
 
     public Assests getAssests() {
         return assests;
@@ -82,5 +89,18 @@ public abstract class AbstractGameController {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public void refillDealtDeck() {
+
+        if (dealtDeck.count() == 0) {
+            Card topCard = discardedDeck.removeTopCard();
+            while (discardedDeck.count() > 0) {
+                dealtDeck.add(discardedDeck.removeTopCard());
+            }
+            dealtDeck.shuffle();
+            discardedDeck.add(topCard);
+        }
+
     }
 }

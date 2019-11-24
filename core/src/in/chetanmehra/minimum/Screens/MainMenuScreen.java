@@ -24,6 +24,7 @@ public class MainMenuScreen extends AbstractScreen {
     private Button newComputerGame;
     private Button instructionsGame;
     private Skin skin;
+    GestureDetector gestureDetector;
 
 
     public MainMenuScreen(Assests assests) {
@@ -37,7 +38,7 @@ public class MainMenuScreen extends AbstractScreen {
     }
 
     public void show() {
-        Gdx.app.log(TAG, "Enters show method");
+        //  Gdx.app.log(TAG, "Enters show method");
         Image backgroundImage = new Image(assests.manager.get(Assests.backgroundImageTexture));
         backgroundImage.setSize(width, height);
         stage.addActor(backgroundImage);
@@ -50,19 +51,21 @@ public class MainMenuScreen extends AbstractScreen {
         LoadButtonListeners();
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
-        multiplexer.addProcessor(new GestureDetector(this));
+        gestureDetector = new GestureDetector(this);
+        gestureDetector.setLongPressSeconds(0.5f);  // long press set to half second
+        multiplexer.addProcessor(gestureDetector);
         Gdx.input.setInputProcessor(multiplexer);
-        Gdx.app.log(TAG, "Executed show method succussfully");
+        //Gdx.app.log(TAG, "Executed show method succussfully");
     }
 
 
     public void render(float delta) {
-        Gdx.app.log(TAG, "Enters render method");
+        //  Gdx.app.log(TAG, "Enters render method");
         Gdx.gl.glClearColor(0.187f, 0.246f, 0.621f, 1.0f);
         Gdx.gl.glClear(16384);
         this.stage.act(Gdx.graphics.getDeltaTime());
         this.stage.draw();
-        Gdx.app.log(TAG, "Executed render method succussfully");
+        //  Gdx.app.log(TAG, "Executed render method succussfully");
     }
 
     public void dispose() {
