@@ -1,5 +1,6 @@
 package in.chetanmehra.minimum.Players;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Player {
     private Sprite minimumButton;
     protected ArrayList<PlayerEventsListener> listeners;
     protected Card currentRoundCard;
+    // protected ArrayList<Card> templongtouchlist = new ArrayList<>();       // Temporary holder of multiple selection.
 
 
     public Player(String name, Assests assests) {
@@ -56,4 +58,25 @@ public class Player {
     public Card removeCard(Card card) {
         return myDeck.removeCard(card);
     }
+
+    public Sprite getMinimumButton() {
+        if (minimumButton == null) {
+            Texture minimumButtonIcon = assests.manager.get(Assests.callMinimumBtn);
+            minimumButton = new Sprite(minimumButtonIcon);
+        }
+        return minimumButton;
+    }
+/*
+    public void addToLongTouchList(Card card) {
+        templongtouchlist.add(card);
+    }
+
+    public ArrayList<Card> getTemplongtouchlist() {
+        return templongtouchlist;
+    }
+
+    public void clearLongTouchList() {
+        templongtouchlist.clear();
+    }
+    */
 }

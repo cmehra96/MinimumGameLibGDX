@@ -68,6 +68,7 @@ public class Assests {
 
     );
     public static final AssetDescriptor<Texture> backgroundImageTexture = new AssetDescriptor<Texture>("images/background.png", Texture.class);
+    public static final AssetDescriptor<Texture> callMinimumBtn = new AssetDescriptor<Texture>("images/call_button_up.png", Texture.class);
     public static final AssetDescriptor<Skin> neonSkin = new AssetDescriptor<Skin>("skin/neon/neon-ui.json", Skin.class);
 
     public void load() {
@@ -77,6 +78,7 @@ public class Assests {
 
         }
         manager.load(backgroundImageTexture);
+        manager.load(callMinimumBtn);
         manager.load(neonSkin);
     }
 

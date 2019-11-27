@@ -2,6 +2,7 @@ package in.chetanmehra.minimum.CardElements;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import in.chetanmehra.minimum.GameHelpers.Assests;
 
@@ -33,7 +34,8 @@ public class Deck {
      */
 
     public void add(Card card) {
-        deck.add(card);
+        if (deck.contains(card) == false)      //To stop same card adding twice while long touch event
+            deck.add(card);
     }
 
     public void allocateDeck() {
@@ -125,5 +127,49 @@ public class Deck {
         return deck.remove(index);
 
 
+    }
+
+    /**
+     * Method to sort deck based on suit
+     * in descending order.
+     * Order will be
+     * Diamond- Highest
+     * Hearts
+     * Spades
+     * Club- Lowest
+     */
+    public void sortBySuitsDesc() {
+        Collections.sort(deck, new Comparator<Card>() {
+            @Override
+            public int compare(Card lhs, Card rhs) {
+                return rhs.compareTo(lhs);
+            }
+        });
+    }
+
+
+    /**
+     * compare Cards by their rank, order same as sortBySuit method
+     */
+    public void sortByRankDesc() {
+        Collections.sort(deck, new Comparator<Card>() {
+            @Override
+            public int compare(Card lhs, Card rhs) {
+                return rhs.cardRank() - lhs.cardRank();
+            }
+        });
+    }
+
+    public void sortByRankAsc() {
+        Collections.sort(deck, new Comparator<Card>() {
+            @Override
+            public int compare(Card lhs, Card rhs) {
+                return lhs.cardRank() - rhs.cardRank();
+            }
+        });
+    }
+
+    public void clear() {
+        deck.clear();
     }
 }

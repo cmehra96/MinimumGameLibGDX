@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import in.chetanmehra.minimum.GameHelpers.Assests;
 
-public class Card extends Sprite {
+public class Card extends Sprite implements Comparable {
     private Rank cardValue;
     private Suit suit;
     private Assests assests;
@@ -46,5 +46,24 @@ public class Card extends Sprite {
 
     public void setAssests(Assests assests) {
         this.assests = assests;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return suit.getValue() * 13 + cardValue.getRank();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return ((Integer) hashCode()).compareTo(o.hashCode());
+    }
+
+    public int cardRank() {
+        return cardValue.getRank();
     }
 }

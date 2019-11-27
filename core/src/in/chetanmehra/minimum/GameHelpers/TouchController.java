@@ -39,10 +39,15 @@ public class TouchController implements GestureDetector.GestureListener {
         for (int i = 0; i < decksize; i++) {
             if (mainPlayer.getCardByIndex(i).getBoundingRectangle().contains(input.x, input.y)) {
                 gameController.mainPlayerCardTapped(i, false);
-            } else if (gameController.getDealtDeck().getTopCard() != null && gameController.getDealtDeck().getTopCard().getBoundingRectangle().contains(input.x, input.y)) {
-                gameController.topCardOfDealtDeckTapped(false);
+                return true;
             }
         }
+        if (gameController.getDealtDeck().getTopCard() != null && gameController.getDealtDeck().getTopCard().getBoundingRectangle().contains(input.x, input.y)) {
+            gameController.topCardOfDealtDeckTapped();
+        } else if (gameController.getDiscardedDeck().getTopCard() != null && gameController.getDiscardedDeck().getTopCard().getBoundingRectangle().contains(input.x, input.y)) {
+            gameController.topCardOfDiscardedDeckTapped();
+        }
+
 
         return true;
     }
@@ -53,18 +58,19 @@ public class TouchController implements GestureDetector.GestureListener {
         Vector3 input = new Vector3(x, y, 0.0f);
         gameController.getCamera().unproject(input);
         Gdx.app.log("Touch Controller", "Inside long press method");
-        /*
-        Player mainPlayer=gameController.getMainPlayer();
-        int decksize=mainPlayer.getMyDeck().count();
-        for(int i=0;i<decksize;i++)
-        {
-            if(mainPlayer.getCardByIndex(i).getBoundingRectangle().contains(x,y))
-            {
-                Gdx.app.debug("Tapped Card",mainPlayer.getName()+mainPlayer.getCardByIndex(i).getCardValue()+mainPlayer.getCardByIndex(i).getSuit());
+
+        Player mainPlayer = gameController.getMainPlayer();
+        int decksize = mainPlayer.getMyDeck().count();
+        for (int i = 0; i < decksize; i++) {
+            if (mainPlayer.getCardByIndex(i).getBoundingRectangle().contains(input.x, input.y)) {
+                gameController.mainPlayerCardTapped(i, true);
+                return true;
             }
         }
-        */
-        return false;
+        if (gameController.getDealtDeck().getTopCard() != null && gameController.getDealtDeck().getTopCard().getBoundingRectangle().contains(input.x, input.y)) {
+            gameController.topCardOfDealtDeckTapped();
+        }
+        return true;
     }
 
     @Override

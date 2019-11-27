@@ -29,9 +29,9 @@ public abstract class AbstractGameController {
 
     public abstract void mainPlayerCardTapped(int cardindex, boolean longPressed);
 
-    public abstract void topCardOfDealtDeckTapped(boolean longPressed);
+    public abstract void topCardOfDealtDeckTapped();
 
-    public abstract void topCardOfDiscardedDeckTapped(boolean longPressed);
+    public abstract void topCardOfDiscardedDeckTapped();
 
     public Assests getAssests() {
         return assests;
