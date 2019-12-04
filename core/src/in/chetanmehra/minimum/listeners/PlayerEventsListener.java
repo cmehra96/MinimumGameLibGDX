@@ -1,15 +1,18 @@
 package in.chetanmehra.minimum.listeners;
 
 import in.chetanmehra.minimum.CardElements.Card;
+import in.chetanmehra.minimum.CardElements.Deck;
 import in.chetanmehra.minimum.Players.Player;
 
 public interface PlayerEventsListener {
-    boolean playCard(Player player, Card card);
+    void singleSwapFromDealtDeck(Player player, Card swapCard);
 
-    boolean requestCardfromDealtDeck(Player player);
+    void multiSwapFromDealtDeck(Player player, Deck tempLongTouchList);
 
-    boolean requestCardfromDiscardedDeck(Player player);
+    void singleSwapFromDiscardedDeck(Player player, Card swapCard);
 
-    boolean sayMinimum(Player player);
+    void multiSwapFromDiscardedDeck(Player player, Deck tempLongTouchList);
+
+    void sayMinimum(Player player);
 
 }

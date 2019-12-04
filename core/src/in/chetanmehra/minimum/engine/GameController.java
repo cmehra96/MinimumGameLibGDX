@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
 import in.chetanmehra.minimum.GameHelpers.Assests;
+import in.chetanmehra.minimum.GameHelpers.CurrentGameState;
 import in.chetanmehra.minimum.Players.AIPlayer;
 import in.chetanmehra.minimum.Players.Player;
+import in.chetanmehra.minimum.listeners.PlayerEventsListener;
 
 public class GameController extends AbstractGameController {
     private final String TAG = "GameController";
@@ -17,6 +19,7 @@ public class GameController extends AbstractGameController {
     private Card touchedCard = null;
     Deck tempLongTouchList = null;
     private boolean isLongPressed = false;
+    private CurrentGameState currentGameState;
 
     public GameController(Camera camera, Assests assests) {
         super(camera, assests);
@@ -42,8 +45,39 @@ public class GameController extends AbstractGameController {
         players.add(new Player("You", assests));
         mainPlayer = players.get(0);
         for (int i = 1; i <= NUMBER_OF_CPUPLAYERS; i++) {
-            players.add(new AIPlayer(assests));
+            players.add(new AIPlayer("Bot " + (i), assests));
         }
+        for (Player player : players
+                ) {
+            player.registerListeners(new PlayerEventsListener() {
+                @Override
+                public void singleSwapFromDealtDeck(Player player, Card swapCard) {
+                    GameController.this.singleCardDealtDeckSwap(player, swapCard);
+                }
+
+                @Override
+                public void multiSwapFromDealtDeck(Player player, Deck tempLongTouchList) {
+                    GameController.this.multiCardDealtDeckSwap(player, tempLongTouchList);
+                }
+
+                @Override
+                public void singleSwapFromDiscardedDeck(Player player, Card swapCard) {
+                    GameController.this.singleCardDiscardedDeckSwap(player, swapCard);
+                }
+
+                @Override
+                public void multiSwapFromDiscardedDeck(Player player, Deck tempLongTouchList) {
+                    GameController.this.multiCardDiscardedDeckSwap(player, tempLongTouchList);
+                }
+
+                @Override
+                public void sayMinimum(Player player) {
+
+                }
+            });
+
+        }
+        currentGameState = new CurrentGameState();
 
     }
 
@@ -107,16 +141,13 @@ public class GameController extends AbstractGameController {
         if (!isLongPressed) {
             if (touchedCard != null) {
                 singleCardDealtDeckSwap(mainPlayer, touchedCard);
-                touchedCard = null;
+                //touchedCard = null;
             }
         } else {
-            multiCardDealtDeckSwap(mainPlayer);
+            multiCardDealtDeckSwap(mainPlayer, tempLongTouchList);
 
         }
-        if (dealtDeck.count() == 0) {
-            Gdx.app.log(TAG, "Dealt Deck empty refilling");
-            refillDealtDeck();
-        }
+
     }
 
     /**
@@ -130,9 +161,17 @@ public class GameController extends AbstractGameController {
         Gdx.app.log(TAG, "Inside single Card Dealt Deck swap method");
         Card temp = dealtDeck.removeTopCard();
         Gdx.app.log(TAG, "Dealt Deck Card touched " + temp.getSuit() + " " + temp.getCardValue());
+        Gdx.app.log(TAG, "Inside Single Card method, dealt deck size" + dealtDeck.count());
         Card temp1 = player.removeCard(touchedCard);
         player.addToHand(temp);
         discardedDeck.add(temp1);
+        this.touchedCard = null;          //Class variable
+        if (dealtDeck.count() == 0) {
+            Gdx.app.log(TAG, "Dealt Deck empty refilling");
+            refillDealtDeck();
+        }
+        switchTurnToNextPlayer(false);
+
     }
 
     /**
@@ -140,11 +179,13 @@ public class GameController extends AbstractGameController {
      * deck if they belong to removable rules.
      *
      * @param player
+     * @param tempLongTouchList
      */
-    private void multiCardDealtDeckSwap(Player player) {
+    private void multiCardDealtDeckSwap(Player player, Deck tempLongTouchList) {
         if (tempLongTouchList.count() != 0) {
             tempLongTouchList.sortByRankAsc();
             Card temp = dealtDeck.removeTopCard();
+            Gdx.app.log(TAG, "Inside Multi Card method, dealt deck size" + dealtDeck.count());
             int i = 0;
             int size = tempLongTouchList.count();
             while (i < size) {
@@ -154,6 +195,11 @@ public class GameController extends AbstractGameController {
             }
             player.addToHand(temp);
             tempLongTouchList.clear();
+            if (dealtDeck.count() == 0) {
+                Gdx.app.log(TAG, "Dealt Deck empty refilling");
+                refillDealtDeck();
+            }
+            switchTurnToNextPlayer(false);
 
         }
 
@@ -167,10 +213,10 @@ public class GameController extends AbstractGameController {
         if (!isLongPressed) {
             if (touchedCard != null) {
                 singleCardDiscardedDeckSwap(mainPlayer, touchedCard);
-                touchedCard = null;
+                // touchedCard = null;
             }
         } else {
-            multiCardDiscardedDeckSwap(mainPlayer);
+            multiCardDiscardedDeckSwap(mainPlayer, tempLongTouchList);
         }
 
     }
@@ -183,8 +229,9 @@ public class GameController extends AbstractGameController {
      * deck
      *
      * @param player
+     * @param tempLongTouchList
      */
-    private void multiCardDiscardedDeckSwap(Player player) {
+    private void multiCardDiscardedDeckSwap(Player player, Deck tempLongTouchList) {
         if (tempLongTouchList.count() != 0) {
             tempLongTouchList.sortByRankAsc();
             Card temp = discardedDeck.removeTopCard();
@@ -197,6 +244,7 @@ public class GameController extends AbstractGameController {
             }
             player.addToHand(temp);
             tempLongTouchList.clear();
+            switchTurnToNextPlayer(false);
 
         }
 
@@ -216,7 +264,32 @@ public class GameController extends AbstractGameController {
         Gdx.app.log(TAG, "Discarded Deck Card touched " + temp.getSuit() + " " + temp.getCardValue());
         discardedDeck.add(temp2);
         player.addToHand(temp);
+        this.touchedCard = null;      //Global variable
+        switchTurnToNextPlayer(false);
     }
 
+    public void switchTurnToNextPlayer(boolean isshowdowncalled) {
+        int size = players.size();
+        if (isshowdowncalled) {
+            for (int i = 0; i < size; i++) {
+                if (players.get(i).isRoundwon())
+                    currentPlayer = (i + 1) % size;
+            }
+
+        } else {
+            currentPlayer = (currentPlayer + 1) % size;
+        }
+
+        ((Player) players.get(currentPlayer)).notifyPlayerForHisTurn(getCurrentGameState());
+
+    }
+
+    private CurrentGameState getCurrentGameState() {
+        currentGameState.dealtDeck = this.dealtDeck;
+        currentGameState.discardedDeck = this.discardedDeck;
+        currentGameState.players = this.players;
+
+        return currentGameState;
+    }
 
 }

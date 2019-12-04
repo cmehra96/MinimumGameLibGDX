@@ -10,6 +10,7 @@ import in.chetanmehra.minimum.engine.AbstractGameController;
 
 
 public class TouchController implements GestureDetector.GestureListener {
+    private String TAG = "TouchController";
     private AbstractGameController gameController;
 
     public TouchController(AbstractGameController gameController) {
@@ -33,7 +34,10 @@ public class TouchController implements GestureDetector.GestureListener {
         Vector3 input = new Vector3(x, y, 0.0f);
         gameController.getCamera().unproject(input);
         Gdx.app.log("Touch Controller", "Inside tap method");
-
+        if (gameController.getMainPlayer() != gameController.getCurrentPlayer()) {
+            Gdx.app.log(TAG, "Current player is not main player");
+            return false;
+        }
         Player mainPlayer = gameController.getMainPlayer();
         int decksize = mainPlayer.getMyDeck().count();
         for (int i = 0; i < decksize; i++) {
@@ -58,7 +62,10 @@ public class TouchController implements GestureDetector.GestureListener {
         Vector3 input = new Vector3(x, y, 0.0f);
         gameController.getCamera().unproject(input);
         Gdx.app.log("Touch Controller", "Inside long press method");
-
+        if (gameController.getMainPlayer() != gameController.getCurrentPlayer()) {
+            Gdx.app.log(TAG, "Current player is not main player");
+            return false;
+        }
         Player mainPlayer = gameController.getMainPlayer();
         int decksize = mainPlayer.getMyDeck().count();
         for (int i = 0; i < decksize; i++) {

@@ -1,5 +1,6 @@
 package in.chetanmehra.minimum.engine;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public abstract class AbstractGameController {
     protected boolean isShuffled = false;
     protected Player mainPlayer;
     protected ArrayList<Player> players;
+    protected int currentPlayer = 0;
 
     public AbstractGameController(Camera camera, Assests assests) {
         this.camera = camera;
@@ -91,6 +93,10 @@ public abstract class AbstractGameController {
         return players;
     }
 
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayer);
+    }
+
     public void refillDealtDeck() {
 
         if (dealtDeck.count() == 0) {
@@ -100,6 +106,9 @@ public abstract class AbstractGameController {
             }
             dealtDeck.shuffle();
             discardedDeck.add(topCard);
+            Gdx.app.log("refill method", "Dealt Deck size " + dealtDeck.count());
+            Gdx.app.log("refill method", "Discarded Deck size " + discardedDeck.count());
+
         }
 
     }

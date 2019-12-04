@@ -29,6 +29,7 @@ public class GameDrawer {
         card.setCardToShowFront();
         card.setOriginCenter();
         card.setRotation(0.0f);
+        // card.setSize((float) 0.08*screen_width,(float) 0.2*screen_height);
         card.setPosition((screen_width / 2 - card.getWidth()), (screen_height / 2 - card.getHeight() / 2));
         card.draw(batch);
 

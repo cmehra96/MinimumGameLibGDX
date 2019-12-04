@@ -1,5 +1,6 @@
 package in.chetanmehra.minimum.Players;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -8,9 +9,11 @@ import java.util.ArrayList;
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
 import in.chetanmehra.minimum.GameHelpers.Assests;
+import in.chetanmehra.minimum.GameHelpers.CurrentGameState;
 import in.chetanmehra.minimum.listeners.PlayerEventsListener;
 
 public class Player {
+    private String TAG = "Player class";
     protected Assests assests;
     protected String name;
     protected Deck myDeck;
@@ -19,8 +22,9 @@ public class Player {
     private boolean isMinimumCalled;
     private boolean isSafed;
     private Sprite minimumButton;
-    protected ArrayList<PlayerEventsListener> listeners;
+    protected PlayerEventsListener listener;
     protected Card currentRoundCard;
+    protected boolean roundwon;
     // protected ArrayList<Card> templongtouchlist = new ArrayList<>();       // Temporary holder of multiple selection.
 
 
@@ -31,6 +35,7 @@ public class Player {
         isPlayerReady = true;
         isMinimumCalled = false;
         isSafed = false;
+
     }
 
     public Deck getMyDeck() {
@@ -45,10 +50,6 @@ public class Player {
     public void addToHand(Card card) {
         currentRoundCard = card;
         myDeck.add(card);
-    }
-
-    public void addEventListeners(PlayerEventsListener playerEventsListener) {
-        listeners.add(playerEventsListener);
     }
 
     public String getName() {
@@ -66,6 +67,24 @@ public class Player {
         }
         return minimumButton;
     }
+
+    public void registerListeners(PlayerEventsListener eventsListener) {
+        listener = eventsListener;
+    }
+
+    public boolean isRoundwon() {
+        return roundwon;
+    }
+
+    public void setRoundwon(boolean roundwon) {
+        this.roundwon = roundwon;
+    }
+
+    public void notifyPlayerForHisTurn(CurrentGameState currentGameState) {
+        Gdx.app.log("Player class", "Inside notify Player for his turn method");
+    }
+    
+    
 /*
     public void addToLongTouchList(Card card) {
         templongtouchlist.add(card);
