@@ -38,8 +38,8 @@ public class GameDrawer {
 
     public void drawDiscardedDeck(Deck discardedDeck) {
         int size = discardedDeck.getSize();
-        for (int i = 0; i < size; i++) {
-            Card card = discardedDeck.getCardByIndex(i);
+
+        Card card = discardedDeck.getTopCard();
             float card_width = card.getWidth();
             float card_height = card.getHeight();
             card.setCardToShowFront();
@@ -47,7 +47,7 @@ public class GameDrawer {
             card.setRotation(0.0f);
             card.setPosition(screen_width / 2 + card_width, screen_height / 2 - card_height / 2);
             card.draw(batch);
-        }
+
     }
 
 

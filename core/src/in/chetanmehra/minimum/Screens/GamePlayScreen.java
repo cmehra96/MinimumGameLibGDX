@@ -62,9 +62,10 @@ public class GamePlayScreen extends AbstractScreen {
         stage.act();
         stage.draw();
         batch.begin();
+        gameController.processGameRender();
         gameDrawer.drawDealtDeck(gameController.getDealtDeck());
         gameDrawer.drawDiscardedDeck(gameController.getDiscardedDeck());
-        gameController.processGameRender();
+
         gameDrawer.drawPlayerDeck(gameController.getPlayers());
         batch.end();
 
