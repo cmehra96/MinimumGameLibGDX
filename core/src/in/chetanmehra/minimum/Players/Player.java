@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import java.util.ArrayList;
-
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
 import in.chetanmehra.minimum.GameHelpers.Assests;
@@ -25,6 +23,8 @@ public class Player {
     protected PlayerEventsListener listener;
     protected Card currentRoundCard;
     protected boolean roundwon;
+    protected int previousRoundScore;
+    protected int score;
     // protected ArrayList<Card> templongtouchlist = new ArrayList<>();       // Temporary holder of multiple selection.
 
 
@@ -35,6 +35,7 @@ public class Player {
         isPlayerReady = true;
         isMinimumCalled = false;
         isSafed = false;
+        score = 0;
 
     }
 
@@ -82,6 +83,20 @@ public class Player {
 
     public void notifyPlayerForHisTurn(CurrentGameState currentGameState) {
         Gdx.app.log("Player class", "Inside notify Player for his turn method");
+    }
+
+    public int evaluateScore() {
+        int score = 0;
+        for (Card card : myDeck.getDeck()) {
+            score += card.cardRank();
+        }
+        previousRoundScore = score;
+        Gdx.app.log(TAG, "Score of" + name + "this round" + score);
+        return score;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
     }
     
     

@@ -72,7 +72,7 @@ public class GameController extends AbstractGameController {
 
                 @Override
                 public void sayMinimum(Player player) {
-
+                    GameController.this.callMinimumByPlayer(player);
                 }
             });
 
@@ -273,14 +273,53 @@ public class GameController extends AbstractGameController {
         if (isshowdowncalled) {
             for (int i = 0; i < size; i++) {
                 if (players.get(i).isRoundwon())
-                    currentPlayer = (i + 1) % size;
+                    currentPlayerIndex = (i + 1) % size;
             }
 
         } else {
-            currentPlayer = (currentPlayer + 1) % size;
+            currentPlayerIndex = (currentPlayerIndex + 1) % size;
         }
 
-        ((Player) players.get(currentPlayer)).notifyPlayerForHisTurn(getCurrentGameState());
+        ((Player) players.get(currentPlayerIndex)).notifyPlayerForHisTurn(getCurrentGameState());
+
+    }
+
+    @Override
+    public void minimumButtonTapped() {
+        callMinimumByPlayer(mainPlayer);
+
+    }
+
+    private void callMinimumByPlayer(Player currentPlayer) {
+        Gdx.app.log(TAG, "Minimum Called By " + currentPlayer.getName());
+        boolean roundwon = true;
+        Player winnerPlayer = currentPlayer;
+        int roundScore = currentPlayer.evaluateScore();
+        for (Player player : players) {
+            if (player == currentPlayer)
+                continue;
+            int playerRoundScore = player.evaluateScore();
+            if (roundScore >= playerRoundScore) {
+                roundwon = false;
+                winnerPlayer = player;
+                roundScore = playerRoundScore;
+
+            }
+
+        }
+        if (roundwon) {
+            for (Player player :
+                    players) {
+                if (player == currentPlayer)
+                    continue;
+                player.addScore(player.evaluateScore());
+                player.setRoundwon(false);
+            }
+        } else {
+            currentPlayer.addScore(2 * currentPlayer.evaluateScore());       // Double points added to player if lost
+            players.get(players.indexOf(winnerPlayer)).setRoundwon(true);   // Index of player who won the round.
+        }
+        Gdx.app.log(TAG, "Winner of this round " + winnerPlayer.getName());
 
     }
 

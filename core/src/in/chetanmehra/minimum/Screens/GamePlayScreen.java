@@ -66,7 +66,7 @@ public class GamePlayScreen extends AbstractScreen {
         gameDrawer.drawDealtDeck(gameController.getDealtDeck());
         gameDrawer.drawDiscardedDeck(gameController.getDiscardedDeck());
 
-        gameDrawer.drawPlayerDeck(gameController.getPlayers());
+        gameDrawer.drawPlayerDeck(gameController);
         batch.end();
 
         //   Gdx.app.log(TAG, "render metod executed succussfully");

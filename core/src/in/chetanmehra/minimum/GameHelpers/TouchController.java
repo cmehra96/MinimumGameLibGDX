@@ -50,6 +50,8 @@ public class TouchController implements GestureDetector.GestureListener {
             gameController.topCardOfDealtDeckTapped();
         } else if (gameController.getDiscardedDeck().getTopCard() != null && gameController.getDiscardedDeck().getTopCard().getBoundingRectangle().contains(input.x, input.y)) {
             gameController.topCardOfDiscardedDeckTapped();
+        } else if (mainPlayer.getMinimumButton().getBoundingRectangle().contains(input.x, input.y)) {
+            gameController.minimumButtonTapped();
         }
 
 
@@ -74,9 +76,7 @@ public class TouchController implements GestureDetector.GestureListener {
                 return true;
             }
         }
-        if (gameController.getDealtDeck().getTopCard() != null && gameController.getDealtDeck().getTopCard().getBoundingRectangle().contains(input.x, input.y)) {
-            gameController.topCardOfDealtDeckTapped();
-        }
+
         return true;
     }
 

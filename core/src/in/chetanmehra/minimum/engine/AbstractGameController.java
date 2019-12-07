@@ -19,7 +19,7 @@ public abstract class AbstractGameController {
     protected boolean isShuffled = false;
     protected Player mainPlayer;
     protected ArrayList<Player> players;
-    protected int currentPlayer = 0;
+    protected int currentPlayerIndex = 0;
 
     public AbstractGameController(Camera camera, Assests assests) {
         this.camera = camera;
@@ -34,6 +34,8 @@ public abstract class AbstractGameController {
     public abstract void topCardOfDealtDeckTapped();
 
     public abstract void topCardOfDiscardedDeckTapped();
+
+    public abstract void minimumButtonTapped();
 
     public Assests getAssests() {
         return assests;
@@ -94,7 +96,7 @@ public abstract class AbstractGameController {
     }
 
     public Player getCurrentPlayer() {
-        return players.get(currentPlayer);
+        return players.get(currentPlayerIndex);
     }
 
     public void refillDealtDeck() {

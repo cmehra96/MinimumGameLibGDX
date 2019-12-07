@@ -2,7 +2,7 @@ package in.chetanmehra.minimum.Players;
 
 import com.badlogic.gdx.Gdx;
 
-import java.util.Random;
+import java.util.ArrayList;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +39,17 @@ public class AIPlayer extends Player {
     }
 
     private void choseActionToPlayAndInformListeners() {
+        // int callPercent=getCallPercent(currentGameState.players,this);
         pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());
+    }
+
+    private int getCallPercent(ArrayList<Player> players, Player currentPlayer) {
+        Gdx.app.log(TAG, "Inside get Call Percent method");
+        int cardCount = myDeck.count();
+        int size = 0;
+        int noOfPlayers = players.size();
+        return -1;
+
     }
 
     private void pickBestCard(Deck myDeck, Card deckTopCard) {

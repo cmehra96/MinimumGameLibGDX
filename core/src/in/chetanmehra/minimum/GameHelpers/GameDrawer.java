@@ -2,6 +2,7 @@ package in.chetanmehra.minimum.GameHelpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
 import in.chetanmehra.minimum.Players.Player;
+import in.chetanmehra.minimum.engine.AbstractGameController;
 
 public class GameDrawer {
     private Assests assests;
@@ -16,6 +18,7 @@ public class GameDrawer {
     final float screen_width = Gdx.graphics.getWidth();
     final float screen_height = Gdx.graphics.getHeight();
     Player currentPlayer;
+    ArrayList<Player> players;
 
 
     public GameDrawer(SpriteBatch batch, Assests assests) {
@@ -40,18 +43,22 @@ public class GameDrawer {
         int size = discardedDeck.getSize();
 
         Card card = discardedDeck.getTopCard();
-            float card_width = card.getWidth();
-            float card_height = card.getHeight();
-            card.setCardToShowFront();
-            card.setOriginCenter();
-            card.setRotation(0.0f);
-            card.setPosition(screen_width / 2 + card_width, screen_height / 2 - card_height / 2);
-            card.draw(batch);
+        float card_width = card.getWidth();
+        float card_height = card.getHeight();
+        card.setCardToShowFront();
+        card.setOriginCenter();
+        card.setRotation(0.0f);
+        card.setPosition(screen_width / 2 + card_width, screen_height / 2 - card_height / 2);
+        card.draw(batch);
 
     }
 
 
-    public void drawPlayerDeck(ArrayList<Player> players) {
+    public void drawPlayerDeck(AbstractGameController gameController) {
+        if (players == null) {
+            players = gameController.getPlayers();
+        }
+        currentPlayer = gameController.getCurrentPlayer();
         drawMainPlayerDeck(players.get(0));
         drawPlayerAtTopLeft(players.get(1));
         drawPlayerAtTop(players.get(2));
@@ -59,6 +66,12 @@ public class GameDrawer {
 
     private void drawMainPlayerDeck(Player player) {
         int decksize = player.getMyDeck().count();
+        if (currentPlayer == player) {
+            Sprite minimumBtn = player.getMinimumButton();
+            minimumBtn.setSize((float) (screen_width / 9), (float) (screen_height / 5));
+            minimumBtn.setPosition((screen_width - minimumBtn.getWidth()), 10.0f);
+            minimumBtn.draw(batch);
+        }
         float cardgap = (float) 0.075 * screen_width;
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
