@@ -98,9 +98,12 @@ public class Player {
     public void addScore(int score) {
         this.score += score;
     }
-    
-    
-/*
+
+    public int getPreviousRoundScore() {
+        return previousRoundScore;
+    }
+
+    /*
     public void addToLongTouchList(Card card) {
         templongtouchlist.add(card);
     }

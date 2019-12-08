@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
+import in.chetanmehra.minimum.CardElements.HandCombination;
 import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.GameHelpers.CurrentGameState;
 import in.chetanmehra.minimum.Players.AIPlayer;
@@ -182,7 +183,7 @@ public class GameController extends AbstractGameController {
      * @param tempLongTouchList
      */
     private void multiCardDealtDeckSwap(Player player, Deck tempLongTouchList) {
-        if (tempLongTouchList.count() != 0) {
+        if (HandCombination.isStraight(player, tempLongTouchList) == true || HandCombination.isThreeOfKind(player, tempLongTouchList) == true) {
             tempLongTouchList.sortByRankAsc();
             Card temp = dealtDeck.removeTopCard();
             Gdx.app.log(TAG, "Inside Multi Card method, dealt deck size" + dealtDeck.count());
@@ -232,7 +233,7 @@ public class GameController extends AbstractGameController {
      * @param tempLongTouchList
      */
     private void multiCardDiscardedDeckSwap(Player player, Deck tempLongTouchList) {
-        if (tempLongTouchList.count() != 0) {
+        if (HandCombination.isStraight(player, tempLongTouchList) == true || HandCombination.isThreeOfKind(player, tempLongTouchList) == true) {
             tempLongTouchList.sortByRankAsc();
             Card temp = discardedDeck.removeTopCard();
             int i = 0;
@@ -320,6 +321,7 @@ public class GameController extends AbstractGameController {
             players.get(players.indexOf(winnerPlayer)).setRoundwon(true);   // Index of player who won the round.
         }
         Gdx.app.log(TAG, "Winner of this round " + winnerPlayer.getName());
+        switchTurnToNextPlayer(true);
 
     }
 

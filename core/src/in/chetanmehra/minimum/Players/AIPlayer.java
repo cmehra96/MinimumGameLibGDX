@@ -3,6 +3,7 @@ package in.chetanmehra.minimum.Players;
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -39,8 +40,15 @@ public class AIPlayer extends Player {
     }
 
     private void choseActionToPlayAndInformListeners() {
-        // int callPercent=getCallPercent(currentGameState.players,this);
-        pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());
+        int callPercent = getCallPercent(currentGameState.players, this);
+        Gdx.app.log(TAG, "Call percent " + callPercent);
+        if (callPercent >= 75) {
+            listener.sayMinimum(this);
+        } else if (myDeck.count() < 3) {
+            pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());
+        } else {
+
+        }
     }
 
     private int getCallPercent(ArrayList<Player> players, Player currentPlayer) {
@@ -48,6 +56,43 @@ public class AIPlayer extends Player {
         int cardCount = myDeck.count();
         int size = 0;
         int noOfPlayers = players.size();
+        int lastRoundScore = previousRoundScore;
+        Card roundCard = currentRoundCard;
+        int tempPercent = 0;
+        int index = 0;
+        int score = currentPlayer.evaluateScore();
+        if (cardCount <= 2) {
+            if (score <= 3) {
+                callPercent = 100;
+                return callPercent;
+            }
+        }
+        for (Player player :
+                players) {
+            if (player == currentPlayer)
+                continue;
+            int otherPlayerCard = player.getMyDeck().count();
+            int otherPlayerLastRoundScore = player.getPreviousRoundScore();
+            if (cardCount <= otherPlayerCard)   // if current player card is less than other player card
+            {
+                if ((lastRoundScore + roundCard.cardRank()) <= otherPlayerLastRoundScore)      // if last round won by current player
+                {
+                    tempPercent += 100;
+                } else if ((lastRoundScore + roundCard.cardRank()) <= otherPlayerCard + 2) {
+                    tempPercent += new Random().nextInt(51) + 50; // [0,50] +50 => [50,100] //random percent from 50 to 100
+                } else {
+                    tempPercent += new Random().nextInt(101);      // if last round won by current player
+                }
+            } else {
+                if ((float) (score / cardCount) <= 2.5) {
+                    tempPercent += new Random().nextInt(51) + 50; // [0,50] +50 => [50,100] //random percent from 50 to 100
+                } else {
+                    tempPercent += new Random().nextInt(101);  // if last round won by current player
+                }
+            }
+
+        }
+        callPercent = tempPercent / (noOfPlayers - 1); //excluding current player
         return -1;
 
     }
