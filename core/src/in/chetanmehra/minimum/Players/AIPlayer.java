@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
+import in.chetanmehra.minimum.CardElements.HandCombination;
 import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.GameHelpers.CurrentGameState;
 import in.chetanmehra.minimum.Utility.Pair;
@@ -47,7 +48,28 @@ public class AIPlayer extends Player {
         } else if (myDeck.count() < 3) {
             pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());
         } else {
-
+            int straightResult = HandCombination.isStraight(this, currentGameState.discardedDeck.getTopCard());
+            Gdx.app.log(TAG, "Straight method result " + straightResult);
+            int threeOfKindResult = HandCombination.isThreeOfKind(this, currentGameState.discardedDeck.getTopCard());
+            Gdx.app.log(TAG, "Three of Kind result " + threeOfKindResult);
+            if (straightResult == 1)           //Straight card exist in Player Deck
+            {
+                Deck straighCards = HandCombination.getStraight(this);
+                listener.multiSwapFromDiscardedDeck(this, straighCards);
+            } else if (straightResult == -1)             //Straight card created by deck and discarded deck card combination
+            {
+                Card nonStraightCard = HandCombination.createStraight(this, currentGameState.discardedDeck.getTopCard());
+                listener.singleSwapFromDiscardedDeck(this, nonStraightCard);
+            } else if (threeOfKindResult == 1)   //Three of kind exist in Player Deck
+            {
+                Deck threeOfKind = HandCombination.getThreeOfKind(this);
+                listener.multiSwapFromDiscardedDeck(this, threeOfKind);
+            } else if (threeOfKindResult == -1)   //Three of kind created using Player deck and Discarded Deck card
+            {
+                Card threeOfKindcard = HandCombination.createThreeOfKind(this, currentGameState.discardedDeck.getTopCard());
+                listener.singleSwapFromDiscardedDeck(this, threeOfKindcard);
+            } else
+                pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());   //IF nothing match, pick AI player  deck largest card
         }
     }
 
@@ -93,7 +115,7 @@ public class AIPlayer extends Player {
 
         }
         callPercent = tempPercent / (noOfPlayers - 1); //excluding current player
-        return -1;
+        return callPercent;
 
     }
 

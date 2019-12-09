@@ -11,6 +11,7 @@ public class Deck {
     private Assests assets;
     private ArrayList<Card> deck;
 
+
     public Deck(Assests assests) {
         this.assets = assests;
         deck = new ArrayList<>();
@@ -171,5 +172,9 @@ public class Deck {
 
     public void clear() {
         deck.clear();
+    }
+
+    public Assests getAssets() {
+        return assets;
     }
 }
