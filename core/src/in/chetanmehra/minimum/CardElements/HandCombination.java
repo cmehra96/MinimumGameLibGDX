@@ -1,7 +1,6 @@
 package in.chetanmehra.minimum.CardElements;
 
 import com.badlogic.gdx.Gdx;
-import com.rits.cloning.Cloner;
 
 import in.chetanmehra.minimum.Players.Player;
 
@@ -19,8 +18,13 @@ public class HandCombination {
     public static boolean isStraight(Player player, Deck tempLongTouchList) {
         Gdx.app.log(TAG, "Checking deck is straight or not");
         if (tempLongTouchList.count() != 3) {
+            Gdx.app.log(TAG, "not enough cards");
             return false;
         }
+        boolean result = isStraight(tempLongTouchList);
+
+
+        /*
         Deck tempDeck = tempLongTouchList;
         tempDeck.sortByRankAsc();
         if (tempDeck.getCardByIndex(0).cardRank() == 1)            //If first card is Ace
@@ -43,14 +47,56 @@ public class HandCombination {
                 straightCount = 1;
 
         }
-        if (tempDeck.getCardByIndex(0).cardRank() == 1)
+        if(tempDeck.getCardByIndex(0).cardRank()==1)
             tempDeck.removeCard(tempDeck.getTopCard());
         if (straightCount == 3)
-            return true;
 
+        {Gdx.app.log(TAG,"Touched cards contain straight set");
+            return true;}
+
+        return false;
+        */
+        return result;
+    }
+
+    public static boolean isStraight(Deck tempdeck) {
+        tempdeck.sortByRankAsc();
+
+        if (tempdeck.getCardByIndex(0).cardRank() == 1)       // If first card is Ace
+        {
+            Card tempCard = tempdeck.getCardByIndex(0);
+            tempdeck.add(tempCard);
+        }
+        int straightcount = 1;
+        for (int i = 0; i < tempdeck.count() - 1; i++) {
+            if (straightcount == 3) {
+                // Log.d(TAG, "is straight worked successfully");
+                break;
+            }
+            int currentrank = tempdeck.getCardByIndex(i).cardRank();
+            int nextrank = tempdeck.getCardByIndex(i + 1).cardRank();
+            if (nextrank - currentrank == 1)           //if cards suit differ by 1, increment straight
+            {
+                straightcount++;
+            } else if (nextrank == 1 && currentrank == 13)     //specific condition for King and Ace
+            {
+                straightcount++;
+            } else if (nextrank - currentrank != 1)    //if cards suit not equal to 1, reset the straight counter
+            {
+                straightcount = 1;
+            }
+        }
+        if (tempdeck.getCardByIndex(0).cardRank() == 1)
+            tempdeck.removeCard(tempdeck.getTopCard());
+        if (straightcount == 3) {
+            Gdx.app.log(TAG, "Deck contains straight set");
+            return true;
+        }
+        Gdx.app.log(TAG, "Deck does not contain straight set");
         return false;
 
     }
+
 
     /**
      * Method to find if straight set exist using combination player deck and Discarded Deck card
@@ -122,7 +168,6 @@ public class HandCombination {
     }
 
     public static Deck getStraight(Player player) {
-        Gdx.app.log(TAG, "Inside GetStraight method");
         Deck straightCards = new Deck(player.getMyDeck().getAssets());
 
         Deck tempDeck = player.getMyDeck();
@@ -149,12 +194,11 @@ public class HandCombination {
         }
         if (tempDeck.getCardByIndex(0).cardRank() == 1)
             tempDeck.removeCard(tempDeck.getTopCard());
-        Gdx.app.log(TAG, "Get Straight method executed succussfully");
+
         return straightCards;
     }
 
     public static Card createStraight(Player player, Card topCard) {
-        Gdx.app.log(TAG, "Inside Create straight method");
         Card removeCard = null;
 
         Deck tempDeck = player.getMyDeck();
@@ -191,48 +235,10 @@ public class HandCombination {
         }
         if (tempDeck.getCardByIndex(0).cardRank() == 1)
             tempDeck.removeCard(tempDeck.getTopCard());
-        Gdx.app.log(TAG, "Removed Card is" + removeCard.getSuit() + " " + removeCard.getCardValue());
         return removeCard;
 
     }
 
-    public static boolean isStraight(Deck tempdeck) {
-        Gdx.app.log(TAG, "Inside isStraight method3");
-        tempdeck.sortByRankAsc();
-
-        if (tempdeck.getCardByIndex(0).cardRank() == 1)       // If first card is Ace
-        {
-            Card tempCard = tempdeck.getCardByIndex(0);
-            tempdeck.add(tempCard);
-        }
-        int straightcount = 1;
-        for (int i = 0; i < tempdeck.count() - 1; i++) {
-            if (straightcount == 3) {
-                // Log.d(TAG, "is straight worked successfully");
-                break;
-            }
-            int currentrank = tempdeck.getCardByIndex(i).cardRank();
-            int nextrank = tempdeck.getCardByIndex(i + 1).cardRank();
-            if (nextrank - currentrank == 1)           //if cards suit differ by 1, increment straight
-            {
-                straightcount++;
-            } else if (nextrank == 1 && currentrank == 13)     //specific condition for King and Ace
-            {
-                straightcount++;
-            } else if (nextrank - currentrank != 1)    //if cards suit not equal to 1, reset the straight counter
-            {
-                straightcount = 1;
-            }
-        }
-        Gdx.app.log(TAG, "Mehtod excuted succussfully");
-        if (tempdeck.getCardByIndex(0).cardRank() == 1)
-            tempdeck.removeCard(tempdeck.getTopCard());
-        if (straightcount == 3)
-            return true;
-
-        return false;
-
-    }
 
     /**
      * Method to check whether selected card of
@@ -243,7 +249,6 @@ public class HandCombination {
      * @return True if touch cards are three of kind else false
      */
     public static boolean isThreeOfKind(Player player, Deck tempLongTouchList) {
-        Gdx.app.log(TAG, "Inside Multi touch three of kind");
         if (tempLongTouchList.count() != 3)
             return false;
         if (tempLongTouchList.getCardByIndex(0).cardRank() == tempLongTouchList.getCardByIndex(1).cardRank()
@@ -259,7 +264,7 @@ public class HandCombination {
      * @return
      */
     public static int isThreeOfKind(Player player, Card card) {
-        Gdx.app.log(TAG, "Inside is three of kind method 2");
+
         Deck tempDeck = player.getMyDeck();
         tempDeck.sortByRankAsc();
         int count = tempDeck.count();

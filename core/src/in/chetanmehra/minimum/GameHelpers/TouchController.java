@@ -40,7 +40,7 @@ public class TouchController implements GestureDetector.GestureListener {
         }
         Player mainPlayer = gameController.getMainPlayer();
         int decksize = mainPlayer.getMyDeck().count();
-        for (int i = 0; i < decksize; i++) {
+        for (int i = decksize - 1; i >= 0; i--) {
             if (mainPlayer.getCardByIndex(i).getBoundingRectangle().contains(input.x, input.y)) {
                 gameController.mainPlayerCardTapped(i, false);
                 return true;

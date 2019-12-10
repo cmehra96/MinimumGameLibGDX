@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import in.chetanmehra.minimum.GameHelpers.Assests;
 
@@ -13,6 +14,7 @@ public abstract class AbstractScreen extends ScreenAdapter implements GestureDet
     private boolean goToNextScreen = false;
     private Screen nextScreen = null;
     private Screen previousScreen = null;
+    public Skin skin;
 
     public void SwitchToScreen(Screen screen) {
         goToNextScreen = true;
@@ -50,6 +52,8 @@ public abstract class AbstractScreen extends ScreenAdapter implements GestureDet
     public void setNextScreen(Screen nextScreen) {
         this.nextScreen = nextScreen;
     }
+
+    public abstract void onBackPressed();
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {

@@ -32,7 +32,7 @@ public class GameDrawer {
         card.setCardToShowFront();
         card.setOriginCenter();
         card.setRotation(0.0f);
-        // card.setSize((float) 0.08*screen_width,(float) 0.2*screen_height);
+        card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
         card.setPosition((screen_width / 2 - card.getWidth()), (screen_height / 2 - card.getHeight() / 2));
         card.draw(batch);
 
@@ -48,6 +48,7 @@ public class GameDrawer {
         card.setCardToShowFront();
         card.setOriginCenter();
         card.setRotation(0.0f);
+        card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
         card.setPosition(screen_width / 2 + card_width, screen_height / 2 - card_height / 2);
         card.draw(batch);
 
@@ -60,25 +61,60 @@ public class GameDrawer {
         }
         currentPlayer = gameController.getCurrentPlayer();
         drawMainPlayerDeck(players.get(0));
-        drawPlayerAtTopLeft(players.get(1));
-        drawPlayerAtTop(players.get(2));
+
+        // drawPlayerAtLeft(players.get(1));
+        drawPlayerAtBottomLeft(players.get(1));
+        drawPlayerAtTopLeft(players.get(2));
+        drawPlayerAtTop(players.get(3));
+        drawPlayerAtTopRight(players.get(4));
+        drawPlayerAtBottomRight(players.get(5));
     }
+
 
     private void drawMainPlayerDeck(Player player) {
         int decksize = player.getMyDeck().count();
         if (currentPlayer == player) {
             Sprite minimumBtn = player.getMinimumButton();
             minimumBtn.setSize((float) (screen_width / 9), (float) (screen_height / 5));
-            minimumBtn.setPosition((screen_width - minimumBtn.getWidth()), 10.0f);
+            minimumBtn.setPosition((screen_width - 2.5f * minimumBtn.getWidth()), screen_height / 2 - minimumBtn.getHeight() / 2);
             minimumBtn.draw(batch);
         }
-        float cardgap = (float) 0.075 * screen_width;
+        float cardgap = (float) 0.045 * screen_width;
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
+            card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
             card.setCardToShowFront();
             card.setPosition((float) (((screen_width / 2) - (decksize / 2) * cardgap) + (cardgap * i)), (float) 10.0f);
             card.draw(batch);
 
+        }
+    }
+
+    private void drawPlayerAtLeft(Player player) {
+        int decksize = player.getMyDeck().count();
+        float cardgap = (float) 0.05 * screen_height;
+        for (int i = 0; i < decksize; i++) {
+            Card card = player.getCardByIndex(i);
+            card.setCardToShowFront();
+            card.setOriginCenter();
+            card.setRotation(90.0f);
+            card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
+            card.setPosition((float) (10.0f), (float) (screen_height / 2 - (decksize / 2) * cardgap) - (cardgap * i));
+            card.draw(batch);
+        }
+    }
+
+    private void drawPlayerAtBottomLeft(Player player) {
+        int decksize = player.getMyDeck().count();
+        for (int i = 0; i < decksize; i++) {
+            Card card = player.getCardByIndex(i);
+            card.setCardToShowFront();
+            card.setOriginCenter();
+            card.setRotation(315.0f);
+            card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
+            card.setPosition((float) ((0.07 * screen_width - (decksize / 2) * (0.01 * screen_width)) + (i * (0.016 * screen_width)))
+                    , (float) (((decksize / 2 * (0.018 * screen_height)) + (0.074 * screen_height)) - (i * (0.027 * screen_height))));
+            card.draw(batch);
         }
     }
 
@@ -90,6 +126,7 @@ public class GameDrawer {
             card.setCardToShowFront();
             card.setOriginCenter();
             card.setRotation(0.0f);
+            card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
             card.setPosition((float) ((screen_width / 2 - (decksize / 2) * cardgap) + (cardgap * i)), (float) (screen_height - card.getHeight()));
             card.draw(batch);
         }
@@ -103,10 +140,39 @@ public class GameDrawer {
             card.setCardToShowFront();
             card.setOriginCenter();
             card.setRotation(225.0f);
-            card.setPosition((float) ((((decksize / 2) * 10) + (0.1 * screen_width)) - (i * 20)), (float) ((((decksize / 2) * 10) + (0.75 * screen_height)) - (i * 20)));
+            card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
+            card.setPosition((float) ((((decksize / 2) * 10) + (0.1 * screen_width)) - (i * 20)),
+                    (float) ((((decksize / 2) * 10) + (0.75 * screen_height)) - (i * 20)));
             card.draw(batch);
         }
 
+    }
+
+    private void drawPlayerAtTopRight(Player player) {
+        int decksize = player.getMyDeck().count();
+        for (int i = 0; i < decksize; i++) {
+            Card card = player.getCardByIndex(i);
+            card.setCardToShowFront();
+            card.setOriginCenter();
+            card.setRotation(135.0f);
+            card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
+            card.setPosition((float) (((0.87 * screen_width) - (decksize / 2 * 10)) + (i * 10)), (float) (((decksize / 2 * 10) + (0.72 * screen_height)) - (i * 10)));
+            card.draw(batch);
+        }
+    }
+
+    private void drawPlayerAtBottomRight(Player player) {
+        int decksize = player.getMyDeck().count();
+        for (int i = 0; i < decksize; i++) {
+            Card card = player.getCardByIndex(i);
+            card.setCardToShowFront();
+            card.setOriginCenter();
+            card.setRotation(45.0f);
+            card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
+            card.setPosition((float) (((decksize / 2 * 10) + (0.85 * screen_width)) - (i * 10)),
+                    (float) (((decksize / 2 * 10) + 40) - (i * 10)));
+            card.draw(batch);
+        }
     }
 
 

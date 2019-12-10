@@ -22,7 +22,7 @@ public class MainMenuScreen extends AbstractScreen {
     private int width;
     private int height;
     private Button newComputerGame;
-    private Button instructionsGame;
+    private Button gameInstructionsBtn;
     private Skin skin;
     GestureDetector gestureDetector;
 
@@ -85,5 +85,8 @@ public class MainMenuScreen extends AbstractScreen {
         SwitchToScreen(new GamePlayScreen(assests));
     }
 
+    @Override
+    public void onBackPressed() {
 
+    }
 }

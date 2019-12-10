@@ -48,7 +48,7 @@ public class AIPlayer extends Player {
         } else if (myDeck.count() < 3) {
             pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());
         } else {
-            int straightResult = HandCombination.isStraight(this, currentGameState.discardedDeck.getTopCard());
+           /* int straightResult = HandCombination.isStraight(this, currentGameState.discardedDeck.getTopCard());
             Gdx.app.log(TAG, "Straight method result " + straightResult);
             int threeOfKindResult = HandCombination.isThreeOfKind(this, currentGameState.discardedDeck.getTopCard());
             Gdx.app.log(TAG, "Three of Kind result " + threeOfKindResult);
@@ -68,7 +68,10 @@ public class AIPlayer extends Player {
             {
                 Card threeOfKindcard = HandCombination.createThreeOfKind(this, currentGameState.discardedDeck.getTopCard());
                 listener.singleSwapFromDiscardedDeck(this, threeOfKindcard);
-            } else
+            }
+            else
+            /*/
+
                 pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());   //IF nothing match, pick AI player  deck largest card
         }
     }
@@ -103,7 +106,7 @@ public class AIPlayer extends Player {
                 } else if ((lastRoundScore + roundCard.cardRank()) <= otherPlayerCard + 2) {
                     tempPercent += new Random().nextInt(51) + 50; // [0,50] +50 => [50,100] //random percent from 50 to 100
                 } else {
-                    tempPercent += new Random().nextInt(101);      // if last round won by current player
+                    tempPercent += new Random().nextInt(101);      // if last round lost by current player
                 }
             } else {
                 if ((float) (score / cardCount) <= 2.5) {
