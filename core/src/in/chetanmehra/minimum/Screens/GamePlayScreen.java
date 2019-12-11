@@ -28,6 +28,7 @@ public class GamePlayScreen extends AbstractScreen {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Stage stage;
+    private Stage stage2;
     private int width = 0;
     private int height = 0;
     private GameDrawer gameDrawer;
@@ -44,10 +45,12 @@ public class GamePlayScreen extends AbstractScreen {
         batch = new SpriteBatch();
         FillViewport viewport = new FillViewport(width, height, camera);
         viewport.update(width, height, true);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
         stage = new Stage(viewport);
+        stage2 = new Stage(viewport);
         gameDrawer = new GameDrawer(batch, assests);
         gameController = new GameController(camera, assests);
-        Gdx.input.setCatchKey(Input.Keys.BACK, true);
+
 
     }
 
@@ -58,6 +61,7 @@ public class GamePlayScreen extends AbstractScreen {
         stage.addActor(backgroundImage);
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(stage2);
         multiplexer.addProcessor(new GestureDetector(new TouchController(gameController)));
         Gdx.input.setInputProcessor(multiplexer);
         batch.setProjectionMatrix(camera.combined);
@@ -84,8 +88,16 @@ public class GamePlayScreen extends AbstractScreen {
         gameDrawer.drawPlayerDeck(gameController);
 
         batch.end();
+        stage2.act();
+        stage2.draw();
 
         //   Gdx.app.log(TAG, "render metod executed succussfully");
+    }
+
+    @Override
+    public void dispose() {
+        Gdx.app.log(TAG, "Disposing assests");
+        batch.dispose();
     }
 
     @Override
@@ -98,17 +110,22 @@ public class GamePlayScreen extends AbstractScreen {
         Dialog dialog = new Dialog("Are you sure you want to exit", skin) {
             @Override
             protected void result(Object object) {
-                super.result(object);
+                if (object.equals(Integer.valueOf(0)))      //Cancel button
+                {
+                    hide();
+                } else if (object.equals(Integer.valueOf(-1))) {
+                    SwitchToScreen(new MainMenuScreen(assests));   //Quit Button
+                } else {
+                    SwitchToScreen(new GamePlayScreen(assests));
+                }
             }
         };
-        dialog.button(btnQuit);
-        dialog.button(btnCancel);
-        dialog.button(btnRestart);
-        dialog.show(stage);
-        dialog.padLeft(50.0f);
-        dialog.padRight(50.0f);
-        dialog.padBottom(10.0f);
-        dialog.show(this.stage);
+        dialog.button(btnQuit, Integer.valueOf(-1));
+        dialog.button(btnCancel, Integer.valueOf(0));
+        dialog.button(btnRestart, Integer.valueOf(1));
+        dialog.show(stage2);
+        //dialog.padLeft(50.0f);
+        // dialog.padRight(50.0f);
 
          /*  Dialog dialog= new Dialog("Are you sure want to Exit",skin){
             @Override
