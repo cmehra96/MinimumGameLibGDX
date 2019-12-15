@@ -71,6 +71,8 @@ public class Assests {
     public static final AssetDescriptor<Texture> callMinimumBtn = new AssetDescriptor<Texture>("images/call_button_up.png", Texture.class);
     public static final AssetDescriptor<Skin> neonSkin = new AssetDescriptor<Skin>("skin/neon/neon-ui.json", Skin.class);
     public static final AssetDescriptor<Skin> glassySkin = new AssetDescriptor<Skin>("skin/glassy/glassy-ui.json", Skin.class);
+    public static final AssetDescriptor<Texture> checkIcon = new AssetDescriptor<Texture>("images/correct.png", Texture.class);
+
 
     public void load() {
         manager.load(cardBackImage);
@@ -82,6 +84,7 @@ public class Assests {
         manager.load(callMinimumBtn);
         manager.load(neonSkin);
         manager.load(glassySkin);
+        manager.load(checkIcon);
     }
 
     public void dispose() {

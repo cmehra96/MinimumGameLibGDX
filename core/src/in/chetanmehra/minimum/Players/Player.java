@@ -17,7 +17,7 @@ public class Player {
     protected Deck myDeck;
     private Card lastCard;
     protected boolean isPlayerReady;
-    private boolean isMinimumCalled;
+    private boolean showCardFace;
     private boolean isSafed;
     private Sprite minimumButton;
     protected PlayerEventsListener listener;
@@ -33,7 +33,7 @@ public class Player {
         this.name = name;
         myDeck = new Deck(assests);
         isPlayerReady = true;
-        isMinimumCalled = false;
+        showCardFace = false;
         isSafed = false;
         score = 0;
 
@@ -51,6 +51,7 @@ public class Player {
     public void addToHand(Card card) {
         currentRoundCard = card;
         myDeck.add(card);
+        myDeck.sortBySuitsDesc();
     }
 
     public String getName() {
@@ -79,6 +80,7 @@ public class Player {
 
     public void setRoundwon(boolean roundwon) {
         this.roundwon = roundwon;
+
     }
 
     public void notifyPlayerForHisTurn(CurrentGameState currentGameState) {
@@ -103,6 +105,17 @@ public class Player {
         return previousRoundScore;
     }
 
+    public boolean isShowCardFace() {
+        return showCardFace;
+    }
+
+    public void setShowCardFace(boolean showCardFace) {
+        this.showCardFace = showCardFace;
+    }
+
+    public void clearDeck() {
+        myDeck.clear();
+    }
     /*
     public void addToLongTouchList(Card card) {
         templongtouchlist.add(card);

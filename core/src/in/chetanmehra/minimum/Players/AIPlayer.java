@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
-import in.chetanmehra.minimum.CardElements.HandCombination;
 import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.GameHelpers.CurrentGameState;
 import in.chetanmehra.minimum.Utility.Pair;
@@ -72,7 +71,7 @@ public class AIPlayer extends Player {
             else
             /*/
 
-                pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());   //IF nothing match, pick AI player  deck largest card
+            pickBestCard(myDeck, currentGameState.discardedDeck.getTopCard());   //IF nothing match, pick AI player  deck largest card
         }
     }
 

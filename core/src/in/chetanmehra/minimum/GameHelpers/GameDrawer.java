@@ -29,6 +29,8 @@ public class GameDrawer {
     public void drawDealtDeck(Deck dealtDeck) {
         int size = dealtDeck.getSize();
         Card card = dealtDeck.getTopCard();
+        if (card == null)
+            return;
         card.setCardToShowFront();
         card.setOriginCenter();
         card.setRotation(0.0f);
@@ -43,6 +45,8 @@ public class GameDrawer {
         int size = discardedDeck.getSize();
 
         Card card = discardedDeck.getTopCard();
+        if (card == null)
+            return;
         float card_width = card.getWidth();
         float card_height = card.getHeight();
         card.setCardToShowFront();
@@ -82,6 +86,8 @@ public class GameDrawer {
         float cardgap = (float) 0.045 * screen_width;
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
+            if (card == null)
+                return;
             card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
             card.setCardToShowFront();
             card.setPosition((float) (((screen_width / 2) - (decksize / 2) * cardgap) + (cardgap * i)), (float) 10.0f);
@@ -95,7 +101,10 @@ public class GameDrawer {
         float cardgap = (float) 0.05 * screen_height;
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
-            card.setCardToShowFront();
+            if (player.isShowCardFace())
+                card.setCardToShowFront();
+            else
+                card.setCardToShowBack();
             card.setOriginCenter();
             card.setRotation(90.0f);
             card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
@@ -108,7 +117,12 @@ public class GameDrawer {
         int decksize = player.getMyDeck().count();
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
-            card.setCardToShowFront();
+            if (card == null)
+                return;
+            if (player.isShowCardFace())
+                card.setCardToShowFront();
+            else
+                card.setCardToShowBack();
             card.setOriginCenter();
             card.setRotation(315.0f);
             card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
@@ -123,7 +137,12 @@ public class GameDrawer {
         float cardgap = (float) 0.025 * screen_width;
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
-            card.setCardToShowFront();
+            if (card == null)
+                return;
+            if (player.isShowCardFace())
+                card.setCardToShowFront();
+            else
+                card.setCardToShowBack();
             card.setOriginCenter();
             card.setRotation(0.0f);
             card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
@@ -137,7 +156,12 @@ public class GameDrawer {
         int decksize = player.getMyDeck().count();
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
-            card.setCardToShowFront();
+            if (card == null)
+                return;
+            if (player.isShowCardFace())
+                card.setCardToShowFront();
+            else
+                card.setCardToShowBack();
             card.setOriginCenter();
             card.setRotation(225.0f);
             card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
@@ -152,7 +176,12 @@ public class GameDrawer {
         int decksize = player.getMyDeck().count();
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
-            card.setCardToShowFront();
+            if (card == null)
+                return;
+            if (player.isShowCardFace())
+                card.setCardToShowFront();
+            else
+                card.setCardToShowBack();
             card.setOriginCenter();
             card.setRotation(135.0f);
             card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);
@@ -165,7 +194,12 @@ public class GameDrawer {
         int decksize = player.getMyDeck().count();
         for (int i = 0; i < decksize; i++) {
             Card card = player.getCardByIndex(i);
-            card.setCardToShowFront();
+            if (card == null)
+                return;
+            if (player.isShowCardFace())
+                card.setCardToShowFront();
+            else
+                card.setCardToShowBack();
             card.setOriginCenter();
             card.setRotation(45.0f);
             card.setSize((float) 0.08 * screen_width, (float) 0.2 * screen_height);

@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 
 import java.util.ArrayList;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
@@ -21,6 +23,9 @@ public class GameController extends AbstractGameController {
     Deck tempLongTouchList = null;
     private boolean isLongPressed = false;
     private CurrentGameState currentGameState;
+    private boolean isShowDownCalled = false;
+    private final ScheduledThreadPoolExecutor asyncTaskExecutor = new ScheduledThreadPoolExecutor(1);
+    private int roundCounter = 0;
 
     public GameController(Camera camera, Assests assests) {
         super(camera, assests);
@@ -83,28 +88,16 @@ public class GameController extends AbstractGameController {
     }
 
     private void distributeCards() {
+        Gdx.app.log(TAG, "Distributing cards");
         dealtDeck.shuffle();
         isShuffled = true;
 
         discardedDeck.add(dealtDeck.deal());
         for (int i = 0; i < players.size(); i++) {
-            if (i == 0) {
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-            } else {
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-                players.get(i).addToHand(dealtDeck.deal());
-            }
+
+            players.get(i).addToHand(dealtDeck.deal());
+            players.get(i).addToHand(dealtDeck.deal());
+
         }
     }
 
@@ -297,6 +290,7 @@ public class GameController extends AbstractGameController {
         Player winnerPlayer = currentPlayer;
         int roundScore = currentPlayer.evaluateScore();
         for (Player player : players) {
+            player.setShowCardFace(true);
             if (player == currentPlayer)
                 continue;
             int playerRoundScore = player.evaluateScore();
@@ -321,7 +315,52 @@ public class GameController extends AbstractGameController {
             players.get(players.indexOf(winnerPlayer)).setRoundwon(true);   // Index of player who won the round.
         }
         Gdx.app.log(TAG, "Winner of this round " + winnerPlayer.getName());
-        switchTurnToNextPlayer(true);
+        isShowDownCalled = true;
+        asyncTaskExecutor.schedule(new Runnable() {
+            @Override
+            public void run() {
+                startNextRound();
+                switchTurnToNextPlayer(true);
+            }
+        }, 5, TimeUnit.SECONDS);
+
+
+    }
+
+    private void startNextRound() {
+        Gdx.app.log(TAG, "Starting round" + (++roundCounter));
+        isShowDownCalled = false;
+        if (roundCounter == 5) {
+            startNextSet();
+            return;
+        }
+        for (Player player :
+                players) {
+            player.setShowCardFace(false);
+            player.addToHand(dealtDeck.deal());
+
+        }
+    }
+
+    /**
+     * Method to start a new set,
+     * it will clear all both player and other decks
+     * and allocated new Cards to dealtDeck.
+     */
+
+    private void startNextSet() {
+        Gdx.app.log(TAG, "Starting Next Set");
+        for (Player player :
+                players) {
+            player.clearDeck();
+            player.setShowCardFace(false);
+
+        }
+        dealtDeck.clear();
+        discardedDeck.clear();
+        dealtDeck.allocateDeck();
+        distributeCards();
+        roundCounter = 0;
 
     }
 
@@ -333,4 +372,7 @@ public class GameController extends AbstractGameController {
         return currentGameState;
     }
 
+    public boolean isShowDownCalled() {
+        return isShowDownCalled;
+    }
 }

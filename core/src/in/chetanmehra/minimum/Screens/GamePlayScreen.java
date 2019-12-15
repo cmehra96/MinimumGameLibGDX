@@ -6,14 +6,11 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
@@ -29,10 +26,12 @@ public class GamePlayScreen extends AbstractScreen {
     private OrthographicCamera camera;
     private Stage stage;
     private Stage stage2;
+    private Stage stage3;
     private int width = 0;
     private int height = 0;
     private GameDrawer gameDrawer;
     private AbstractGameController gameController;
+    // private ScoreBoard scoreBoard;
 
 
     public GamePlayScreen(Assests assests) {
@@ -48,8 +47,11 @@ public class GamePlayScreen extends AbstractScreen {
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
         stage = new Stage(viewport);
         stage2 = new Stage(viewport);
+        stage3 = new Stage(viewport);
         gameDrawer = new GameDrawer(batch, assests);
         gameController = new GameController(camera, assests);
+        // scoreBoard = new ScoreBoard(stage3, this.assests);
+        //gameController.setScoreBoard(scoreBoard);
 
 
     }
@@ -62,6 +64,7 @@ public class GamePlayScreen extends AbstractScreen {
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(stage2);
+        multiplexer.addProcessor(stage3);
         multiplexer.addProcessor(new GestureDetector(new TouchController(gameController)));
         Gdx.input.setInputProcessor(multiplexer);
         batch.setProjectionMatrix(camera.combined);
@@ -86,10 +89,13 @@ public class GamePlayScreen extends AbstractScreen {
         gameDrawer.drawDiscardedDeck(gameController.getDiscardedDeck());
 
         gameDrawer.drawPlayerDeck(gameController);
+        // scoreBoard.displayScoreCard();
 
         batch.end();
         stage2.act();
         stage2.draw();
+        stage3.act();
+        stage3.draw();
 
         //   Gdx.app.log(TAG, "render metod executed succussfully");
     }

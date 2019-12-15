@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
 import in.chetanmehra.minimum.GameHelpers.Assests;
+import in.chetanmehra.minimum.GameHelpers.ScoreBoard;
 import in.chetanmehra.minimum.Players.Player;
 
 public abstract class AbstractGameController {
@@ -20,6 +21,7 @@ public abstract class AbstractGameController {
     protected Player mainPlayer;
     protected ArrayList<Player> players;
     protected int currentPlayerIndex = 0;
+    protected ScoreBoard scoreBoard;
 
     public AbstractGameController(Camera camera, Assests assests) {
         this.camera = camera;
@@ -99,6 +101,10 @@ public abstract class AbstractGameController {
         return players.get(currentPlayerIndex);
     }
 
+    public void setScoreBoard(ScoreBoard scoreBoard) {
+        this.scoreBoard = scoreBoard;
+    }
+
     public void refillDealtDeck() {
 
         if (dealtDeck.count() == 0) {
@@ -113,5 +119,7 @@ public abstract class AbstractGameController {
 
         }
 
+
     }
+
 }
