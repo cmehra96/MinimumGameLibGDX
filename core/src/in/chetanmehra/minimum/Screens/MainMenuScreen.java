@@ -25,6 +25,7 @@ public class MainMenuScreen extends AbstractScreen {
     private int width;
     private int height;
     private Button newComputerGame;
+    private Button creditsScreen;
     private Button gameInstructionsBtn;
     private Skin skin;
     GestureDetector gestureDetector;
@@ -52,7 +53,11 @@ public class MainMenuScreen extends AbstractScreen {
         newComputerGame = new TextButton("Single Player", skin);
         newComputerGame.setSize(230.0f, 95.0f);
         newComputerGame.setPosition(width / 2, height / 4);
+        creditsScreen = new TextButton("Credits", skin);
+        newComputerGame.setSize(230.0f, 95.0f);
+        newComputerGame.setPosition(width / 2, height / 2);
         stage.addActor(newComputerGame);
+        stage.addActor(creditsScreen);
         LoadButtonListeners();
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
@@ -88,6 +93,12 @@ public class MainMenuScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 StartGameWithComputerPlayers();
+            }
+        });
+        creditsScreen.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                SwitchToScreen(new CreditsScreen(assests));
             }
         });
     }

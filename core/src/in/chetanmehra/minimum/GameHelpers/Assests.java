@@ -1,8 +1,11 @@
 package in.chetanmehra.minimum.GameHelpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.Arrays;
@@ -72,6 +75,9 @@ public class Assests {
     public static final AssetDescriptor<Skin> neonSkin = new AssetDescriptor<Skin>("skin/neon/neon-ui.json", Skin.class);
     public static final AssetDescriptor<Skin> glassySkin = new AssetDescriptor<Skin>("skin/glassy/glassy-ui.json", Skin.class);
     public static final AssetDescriptor<Texture> checkIcon = new AssetDescriptor<Texture>("images/correct.png", Texture.class);
+    public static BitmapFont smallFont;
+    public static BitmapFont smallestFont;
+    public static BitmapFont largeFont;
 
 
     public void load() {
@@ -85,6 +91,18 @@ public class Assests {
         manager.load(neonSkin);
         manager.load(glassySkin);
         manager.load(checkIcon);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("bitmapfont/roboto_bold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 36;
+        smallFont = generator.generateFont(parameter);
+        smallFont.setColor(.21f, .22f, .21f, 1f);
+        parameter.size = 72;
+        largeFont = generator.generateFont(parameter);
+        largeFont.setColor(.21f, .22f, .21f, 1f);
+        parameter.size = 24;
+        smallestFont = generator.generateFont(parameter);
+        smallestFont.setColor(.21f, .22f, .21f, 1f);
+        generator.dispose();
     }
 
     public void dispose() {
