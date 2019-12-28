@@ -28,6 +28,7 @@ public class MainMenuScreen extends AbstractScreen {
     private int height;
     private Button newComputerGame;
     private Button creditsScreen;
+    private Button instructionScreen;
     private Button gameInstructionsBtn;
     private Label mainTitle;
     private Table titleTable;
@@ -103,7 +104,10 @@ public class MainMenuScreen extends AbstractScreen {
         buttonTable.setFillParent(true);
         newComputerGame = new TextButton("Single Player", skin);
         creditsScreen = new TextButton("Credits", skin);
+        instructionScreen = new TextButton("Instructions", skin);
         buttonTable.add(newComputerGame).center().padBottom(40);
+        buttonTable.row();
+        buttonTable.add(instructionScreen).center().padBottom(40);
         buttonTable.row();
         buttonTable.add(creditsScreen).center().padBottom(40);
         buttonTable.row();
@@ -141,6 +145,12 @@ public class MainMenuScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 SwitchToScreen(new CreditsScreen(assests));
+            }
+        });
+        instructionScreen.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                SwitchToScreen(new InstructionsScreen(assests));
             }
         });
     }
