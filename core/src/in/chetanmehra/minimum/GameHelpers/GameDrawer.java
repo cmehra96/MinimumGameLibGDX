@@ -13,12 +13,12 @@ import in.chetanmehra.minimum.Players.Player;
 import in.chetanmehra.minimum.engine.AbstractGameController;
 
 public class GameDrawer {
-    private Assests assests;
-    private Batch batch;
     final float screen_width = Gdx.graphics.getWidth();
     final float screen_height = Gdx.graphics.getHeight();
     Player currentPlayer;
     ArrayList<Player> players;
+    private Assests assests;
+    private Batch batch;
 
 
     public GameDrawer(SpriteBatch batch, Assests assests) {

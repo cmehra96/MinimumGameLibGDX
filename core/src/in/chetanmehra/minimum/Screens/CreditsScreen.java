@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import in.chetanmehra.minimum.GameHelpers.Assests;
 
 public class CreditsScreen extends AbstractScreen {
+    private static final String ABOUT_TEXT = "Developed by: @Chetan Mehra\nPowered by: " +
+            "@libgdx\nSkins: @Raymond \"Raeleus\" Buckley.\nTaught By: @Kashish Chowdhary";
+    float textWidth, textHeigh;
     private String TAG = "Credits Screen";
     private Assests assests;
     private Stage stage;
@@ -20,10 +23,7 @@ public class CreditsScreen extends AbstractScreen {
     // private Rectangle bounds;
     private BitmapFont font;
     private SpriteBatch batch;
-    private static final String ABOUT_TEXT = "Developed by: @Chetan Mehra\nPowered by: " +
-            "@libgdx\nSkins: @Raymond \"Raeleus\" Buckley.\nTaught By: @Kashish Chowdhary";
     private GlyphLayout glyphLayout;
-    float textWidth, textHeigh;
 
 
     public CreditsScreen(Assests assests) {

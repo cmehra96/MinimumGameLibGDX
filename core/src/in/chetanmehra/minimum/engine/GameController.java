@@ -19,12 +19,12 @@ import in.chetanmehra.minimum.listeners.PlayerEventsListener;
 public class GameController extends AbstractGameController {
     private final String TAG = "GameController";
     private final int NUMBER_OF_CPUPLAYERS = 5;
-    private Card touchedCard = null;
+    private final ScheduledThreadPoolExecutor asyncTaskExecutor = new ScheduledThreadPoolExecutor(1);
     Deck tempLongTouchList = null;
+    private Card touchedCard = null;
     private boolean isLongPressed = false;
     private CurrentGameState currentGameState;
     private boolean isShowDownCalled = false;
-    private final ScheduledThreadPoolExecutor asyncTaskExecutor = new ScheduledThreadPoolExecutor(1);
     private int roundCounter = 0;
 
     public GameController(Camera camera, Assests assests) {

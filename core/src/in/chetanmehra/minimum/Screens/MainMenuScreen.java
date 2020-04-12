@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
@@ -22,6 +21,8 @@ import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.Screens.SubScreens.Instructions;
 
 public class MainMenuScreen extends AbstractScreen {
+    Instructions instructionsscreen;
+    GestureDetector gestureDetector;
     private String TAG = "Main Menu Screen";
     private Stage stage;
     private Stage stage2;
@@ -35,8 +36,6 @@ public class MainMenuScreen extends AbstractScreen {
     private Table titleTable;
     private Table buttonTable;
     private Skin skin;
-    Instructions instructionsscreen;
-    GestureDetector gestureDetector;
 
 
     public MainMenuScreen(Assests assests) {

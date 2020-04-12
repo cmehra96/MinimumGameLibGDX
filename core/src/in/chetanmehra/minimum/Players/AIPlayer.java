@@ -15,8 +15,8 @@ import in.chetanmehra.minimum.Utility.Pair;
 
 
 public class AIPlayer extends Player {
-    private String TAG;
     private static String[] playerName = {"Bot 1", "Bot 2", "Bot 3", "Bot 4", "Bot 5"};
+    private String TAG;
     private ScheduledThreadPoolExecutor asyncTaskExecutor = new ScheduledThreadPoolExecutor(5);
     private int callPercent = 0;
     private CurrentGameState currentGameState;

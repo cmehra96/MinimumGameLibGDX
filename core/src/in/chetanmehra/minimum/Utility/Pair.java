@@ -24,6 +24,17 @@ public class Pair<F, S> {
     }
 
     /**
+     * Convenience method for creating an appropriately typed pair.
+     *
+     * @param a the first object in the Pair
+     * @param b the second object in the pair
+     * @return a Pair that is templatized with the types of a and b
+     */
+    public static <A, B> Pair<A, B> create(A a, B b) {
+        return new Pair<A, B>(a, b);
+    }
+
+    /**
      * Checks the two objects for equality by delegating to their respective
      * {@link Object#equals(Object)} methods.
      *
@@ -53,16 +64,5 @@ public class Pair<F, S> {
     @Override
     public String toString() {
         return "Pair{" + String.valueOf(first) + " " + String.valueOf(second) + "}";
-    }
-
-    /**
-     * Convenience method for creating an appropriately typed pair.
-     *
-     * @param a the first object in the Pair
-     * @param b the second object in the pair
-     * @return a Pair that is templatized with the types of a and b
-     */
-    public static <A, B> Pair<A, B> create(A a, B b) {
-        return new Pair<A, B>(a, b);
     }
 }

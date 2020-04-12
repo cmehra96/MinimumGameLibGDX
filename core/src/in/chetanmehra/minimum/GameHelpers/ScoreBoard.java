@@ -14,24 +14,20 @@ import com.badlogic.gdx.utils.Align;
 import in.chetanmehra.minimum.Utility.BackgroundColor;
 
 public class ScoreBoard {
-    private Stage stage;
-    private Assests assests;
     Skin skin;
     Container<Table> tableContainer;
-
+    float sw = Gdx.graphics.getWidth();
+    float sh = Gdx.graphics.getHeight();
+    float cw = sw * 0.7f;
+    float ch = sh * 0.5f;
+    private Stage stage;
+    private Assests assests;
     public ScoreBoard(Stage stage, Assests assests) {
         this.stage = stage;
         this.assests = assests;
         skin = assests.manager.get(Assests.glassySkin);
         tableContainer = new Container<Table>();
     }
-
-
-    float sw = Gdx.graphics.getWidth();
-    float sh = Gdx.graphics.getHeight();
-
-    float cw = sw * 0.7f;
-    float ch = sh * 0.5f;
 
     public void displayScoreCard() {
         tableContainer.setSize(cw, ch);

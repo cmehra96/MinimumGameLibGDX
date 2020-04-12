@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Assests {
-    public AssetManager manager = new AssetManager();
     public static final AssetDescriptor<Texture> cardBackImage = new AssetDescriptor<Texture>("images/cards/blueback.png", Texture.class);
     public static final List<AssetDescriptor<Texture>> cards = Arrays.asList(
             new AssetDescriptor<Texture>("images/cards/clubsace.png", Texture.class),
@@ -80,7 +79,7 @@ public class Assests {
     public static BitmapFont smallFont;
     public static BitmapFont smallestFont;
     public static BitmapFont largeFont;
-
+    public AssetManager manager = new AssetManager();
 
     public void load() {
         manager.load(cardBackImage);

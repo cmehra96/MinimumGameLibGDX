@@ -89,12 +89,12 @@ public abstract class AbstractGameController {
 
     public abstract void processGameRender();
 
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
-    }
-
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
     }
 
     public Player getCurrentPlayer() {

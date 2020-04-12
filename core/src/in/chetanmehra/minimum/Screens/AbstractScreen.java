@@ -10,11 +10,11 @@ import in.chetanmehra.minimum.GameHelpers.Assests;
 
 public abstract class AbstractScreen extends ScreenAdapter implements GestureDetector.GestureListener {
     public Assests assests;
+    public Skin skin;
     private boolean goToPreviousScreen = false;
     private boolean goToNextScreen = false;
     private Screen nextScreen = null;
     private Screen previousScreen = null;
-    public Skin skin;
 
     public void SwitchToScreen(Screen screen) {
         goToNextScreen = true;

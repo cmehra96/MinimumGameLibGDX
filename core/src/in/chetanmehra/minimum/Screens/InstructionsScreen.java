@@ -12,13 +12,13 @@ import in.chetanmehra.minimum.GameHelpers.Assests;
 
 public class InstructionsScreen extends AbstractScreen {
 
+    private final String bullet = "\u2022";
     private Stage stage;
     private Table screenTitle;
     private Table instruction;
     private Assests assests;
     private int width;
     private int height;
-    private final String bullet = "\u2022";
     private float fontsize;
 
     public InstructionsScreen(Assests assests) {

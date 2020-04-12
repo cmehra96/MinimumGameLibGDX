@@ -10,8 +10,8 @@ import in.chetanmehra.minimum.Screens.AbstractScreen;
 import in.chetanmehra.minimum.Screens.MainMenuScreen;
 
 public class Game extends com.badlogic.gdx.Game {
-    private SpriteBatch batch;
     public Assests assests;
+    private SpriteBatch batch;
     private OrthographicCamera camera;
 
 

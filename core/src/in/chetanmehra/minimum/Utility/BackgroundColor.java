@@ -206,12 +206,12 @@ public class BackgroundColor implements Drawable {
 
     }
 
-    private void setFilename(String filename) {
-        this.filename = filename;
-    }
-
     private String getFilename() {
         return filename;
+    }
+
+    private void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public float getX() {

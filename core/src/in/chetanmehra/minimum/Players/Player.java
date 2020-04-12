@@ -11,20 +11,20 @@ import in.chetanmehra.minimum.GameHelpers.CurrentGameState;
 import in.chetanmehra.minimum.listeners.PlayerEventsListener;
 
 public class Player {
-    private String TAG = "Player class";
     protected Assests assests;
     protected String name;
     protected Deck myDeck;
-    private Card lastCard;
     protected boolean isPlayerReady;
-    private boolean showCardFace;
-    private boolean isSafed;
-    private Sprite minimumButton;
     protected PlayerEventsListener listener;
     protected Card currentRoundCard;
     protected boolean roundwon;
     protected int previousRoundScore;
     protected int score;
+    private String TAG = "Player class";
+    private Card lastCard;
+    private boolean showCardFace;
+    private boolean isSafed;
+    private Sprite minimumButton;
     // protected ArrayList<Card> templongtouchlist = new ArrayList<>();       // Temporary holder of multiple selection.
 
 
