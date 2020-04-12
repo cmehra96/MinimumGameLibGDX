@@ -74,7 +74,9 @@ public class Assests {
     public static final AssetDescriptor<Texture> callMinimumBtn = new AssetDescriptor<Texture>("images/call_button_up.png", Texture.class);
     public static final AssetDescriptor<Skin> neonSkin = new AssetDescriptor<Skin>("skin/neon/neon-ui.json", Skin.class);
     public static final AssetDescriptor<Skin> glassySkin = new AssetDescriptor<Skin>("skin/glassy/glassy-ui.json", Skin.class);
-    public static final AssetDescriptor<Texture> checkIcon = new AssetDescriptor<Texture>("images/correct.png", Texture.class);
+    public static final AssetDescriptor<Texture> exitButton = new AssetDescriptor<Texture>("images/icon-buttons/exit.png", Texture.class);
+    public static FreeTypeFontGenerator generator;
+    public static FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     public static BitmapFont smallFont;
     public static BitmapFont smallestFont;
     public static BitmapFont largeFont;
@@ -88,11 +90,13 @@ public class Assests {
         }
         manager.load(backgroundImageTexture);
         manager.load(callMinimumBtn);
+        manager.load(exitButton);
         manager.load(neonSkin);
         manager.load(glassySkin);
-        manager.load(checkIcon);
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("bitmapfont/roboto_bold.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //  manager.load(checkIcon);
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("bitmapfont/Font.ttf"));
+
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 36;
         smallFont = generator.generateFont(parameter);
         smallFont.setColor(.21f, .22f, .21f, 1f);
@@ -102,7 +106,7 @@ public class Assests {
         parameter.size = 24;
         smallestFont = generator.generateFont(parameter);
         smallestFont.setColor(.21f, .22f, .21f, 1f);
-        generator.dispose();
+        //generator.dispose();
     }
 
     public void dispose() {

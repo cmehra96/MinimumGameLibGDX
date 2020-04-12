@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
 import in.chetanmehra.minimum.GameHelpers.Assests;
+import in.chetanmehra.minimum.Screens.SubScreens.Instructions;
 
 public class MainMenuScreen extends AbstractScreen {
     private String TAG = "Main Menu Screen";
@@ -34,8 +35,8 @@ public class MainMenuScreen extends AbstractScreen {
     private Table titleTable;
     private Table buttonTable;
     private Skin skin;
+    Instructions instructionsscreen;
     GestureDetector gestureDetector;
-
 
 
     public MainMenuScreen(Assests assests) {
@@ -51,11 +52,11 @@ public class MainMenuScreen extends AbstractScreen {
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(stage2);
-
         gestureDetector = new GestureDetector(this);
         gestureDetector.setLongPressSeconds(0.5f);  // long press set to half second
         multiplexer.addProcessor(gestureDetector);
         Gdx.input.setInputProcessor(multiplexer);
+        instructionsscreen = new Instructions(width, height, assests);
         addTitle();
         addButtons();
 
@@ -65,7 +66,9 @@ public class MainMenuScreen extends AbstractScreen {
     private void addTitle() {
         Image backgroundImage = new Image(assests.manager.get(Assests.backgroundImageTexture));
         backgroundImage.setSize(width, height);
+
         stage.addActor(backgroundImage);
+        stage.addActor(instructionsscreen);
         mainTitle = new Label("Minimum Game", skin);
         mainTitle.setFontScale(4);
         titleTable = new Table();
@@ -150,7 +153,9 @@ public class MainMenuScreen extends AbstractScreen {
         instructionScreen.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SwitchToScreen(new InstructionsScreen(assests));
+                // instructionsscreen.setVisible(true);
+                instructionsscreen.load();
+                // SwitchToScreen(new InstructionsScreen(assests));
             }
         });
     }
@@ -164,7 +169,6 @@ public class MainMenuScreen extends AbstractScreen {
         Gdx.app.log(TAG, "Back Key Pressed");
         Skin skin = assests.manager.get(Assests.glassySkin);
         Button btnQuit = new TextButton("Quit", skin);
-        Button btnRestart = new TextButton("Restart", skin);
         Button btnCancel = new TextButton("Cancel", skin);
         Dialog dialog = new Dialog("Are you sure you want to exit", skin) {
             @Override
