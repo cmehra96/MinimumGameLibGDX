@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.GameHelpers.GameDrawer;
 import in.chetanmehra.minimum.GameHelpers.TouchController;
+import in.chetanmehra.minimum.Screens.SubScreens.ScoreBoard;
 import in.chetanmehra.minimum.engine.AbstractGameController;
 import in.chetanmehra.minimum.engine.GameController;
 
@@ -31,7 +32,7 @@ public class GamePlayScreen extends AbstractScreen {
     private int height = 0;
     private GameDrawer gameDrawer;
     private AbstractGameController gameController;
-    // private ScoreBoard scoreBoard;
+    private ScoreBoard scoreBoard;
 
 
     public GamePlayScreen(Assests assests) {
@@ -45,11 +46,12 @@ public class GamePlayScreen extends AbstractScreen {
         FillViewport viewport = new FillViewport(width, height, camera);
         viewport.update(width, height, true);
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-        stage = new Stage(viewport);
+        stage = new Stage(viewport, batch);
         stage2 = new Stage(viewport);
         stage3 = new Stage(viewport);
         gameDrawer = new GameDrawer(batch, assests);
         gameController = new GameController(camera, assests);
+        scoreBoard = new ScoreBoard(viewport, camera, batch, assests);
         // scoreBoard = new ScoreBoard(stage3, this.assests);
         //gameController.setScoreBoard(scoreBoard);
 
@@ -61,6 +63,7 @@ public class GamePlayScreen extends AbstractScreen {
         Image backgroundImage = new Image(assests.manager.get(Assests.backgroundImageTexture));
         backgroundImage.setSize(width, height);
         stage.addActor(backgroundImage);
+        stage3.addActor(scoreBoard);
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(stage2);
@@ -81,7 +84,8 @@ public class GamePlayScreen extends AbstractScreen {
             onBackPressed();
         stage.act();
         stage.draw();
-
+        if (((GameController) gameController).isShowScoreCard())
+            scoreBoard.load();
         batch.begin();
         gameController.processGameRender();
 
@@ -89,7 +93,7 @@ public class GamePlayScreen extends AbstractScreen {
         gameDrawer.drawDiscardedDeck(gameController.getDiscardedDeck());
 
         gameDrawer.drawPlayerDeck(gameController);
-        // scoreBoard.displayScoreCard();
+
 
         batch.end();
         stage2.act();

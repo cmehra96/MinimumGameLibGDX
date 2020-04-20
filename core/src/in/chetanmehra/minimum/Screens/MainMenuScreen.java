@@ -65,7 +65,6 @@ public class MainMenuScreen extends AbstractScreen {
     private void addTitle() {
         Image backgroundImage = new Image(assests.manager.get(Assests.backgroundImageTexture));
         backgroundImage.setSize(width, height);
-
         stage.addActor(backgroundImage);
         stage.addActor(instructionsscreen);
         mainTitle = new Label("Minimum Game", skin);
@@ -77,28 +76,6 @@ public class MainMenuScreen extends AbstractScreen {
         stage.addActor(titleTable);
 
     }
-/*
-    public void show() {
-        //  Gdx.app.log(TAG, "Enters show method");
-
-        addTitle();
-        addButtons();
-
-        newComputerGame = new TextButton("Single Player", skin);
-        newComputerGame.setSize(230.0f, 95.0f);
-        newComputerGame.setPosition(width / 2, height / 4);
-        creditsScreen = new TextButton("Credits", skin);
-        newComputerGame.setSize(230.0f, 95.0f);
-        newComputerGame.setPosition(width / 2, height / 2);
-        stage.addActor(newComputerGame);
-        stage.addActor(creditsScreen);
-        LoadButtonListeners();
-
-
-
-        //Gdx.app.log(TAG, "Executed show method succussfully");
-    }
-    */
 
     private void addButtons() {
         buttonTable = new Table();
@@ -125,7 +102,7 @@ public class MainMenuScreen extends AbstractScreen {
         Gdx.gl.glClear(16384);
         this.stage.act(Gdx.graphics.getDeltaTime());
         this.stage.draw();
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK))
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK) && !instructionsscreen.isIsvisible())
             onBackPressed();
         stage2.act();
         stage2.draw();

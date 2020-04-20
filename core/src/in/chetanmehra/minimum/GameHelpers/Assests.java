@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Assests {
+    public static Assests assests;
     public static final AssetDescriptor<Texture> cardBackImage = new AssetDescriptor<Texture>("images/cards/blueback.png", Texture.class);
     public static final List<AssetDescriptor<Texture>> cards = Arrays.asList(
             new AssetDescriptor<Texture>("images/cards/clubsace.png", Texture.class),
@@ -74,6 +75,8 @@ public class Assests {
     public static final AssetDescriptor<Skin> neonSkin = new AssetDescriptor<Skin>("skin/neon/neon-ui.json", Skin.class);
     public static final AssetDescriptor<Skin> glassySkin = new AssetDescriptor<Skin>("skin/glassy/glassy-ui.json", Skin.class);
     public static final AssetDescriptor<Texture> exitButton = new AssetDescriptor<Texture>("images/icon-buttons/exit.png", Texture.class);
+    public static final AssetDescriptor<Texture> scoreCardBackground = new AssetDescriptor<Texture>("images/scorebackground.png", Texture.class);
+    public static final AssetDescriptor<Texture> line = new AssetDescriptor<Texture>("images/lineborder.png", Texture.class);
     public static FreeTypeFontGenerator generator;
     public static FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     public static BitmapFont smallFont;
@@ -88,10 +91,13 @@ public class Assests {
 
         }
         manager.load(backgroundImageTexture);
+        manager.load(scoreCardBackground);
+        manager.load(line);
         manager.load(callMinimumBtn);
         manager.load(exitButton);
         manager.load(neonSkin);
         manager.load(glassySkin);
+
         //  manager.load(checkIcon);
         generator = new FreeTypeFontGenerator(Gdx.files.internal("bitmapfont/Font.ttf"));
 

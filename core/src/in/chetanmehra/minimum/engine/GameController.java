@@ -26,6 +26,7 @@ public class GameController extends AbstractGameController {
     private CurrentGameState currentGameState;
     private boolean isShowDownCalled = false;
     private int roundCounter = 0;
+    private boolean isShowScoreCard = false;
 
     public GameController(Camera camera, Assests assests) {
         super(camera, assests);
@@ -314,8 +315,10 @@ public class GameController extends AbstractGameController {
             currentPlayer.addScore(2 * currentPlayer.evaluateScore());       // Double points added to player if lost
             players.get(players.indexOf(winnerPlayer)).setRoundwon(true);   // Index of player who won the round.
         }
+
         Gdx.app.log(TAG, "Winner of this round " + winnerPlayer.getName());
         isShowDownCalled = true;
+        isShowScoreCard = true;
         asyncTaskExecutor.schedule(new Runnable() {
             @Override
             public void run() {
@@ -330,6 +333,7 @@ public class GameController extends AbstractGameController {
     private void startNextRound() {
         Gdx.app.log(TAG, "Starting round" + (++roundCounter));
         isShowDownCalled = false;
+        isShowScoreCard = false;
         if (roundCounter == 5) {
             startNextSet();
             return;
@@ -374,5 +378,9 @@ public class GameController extends AbstractGameController {
 
     public boolean isShowDownCalled() {
         return isShowDownCalled;
+    }
+
+    public boolean isShowScoreCard() {
+        return isShowScoreCard;
     }
 }

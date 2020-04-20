@@ -1,5 +1,6 @@
 package in.chetanmehra.minimum.Screens.SubScreens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -31,6 +32,7 @@ public class Instructions extends Group {
         setHeight(height);
         this.assests = assests;
         Image backgroundImage = new Image(assests.manager.get(Assests.backgroundImageTexture));
+        backgroundImage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         backgroundImage.setPosition(-width, 0.0f);
         addActor(backgroundImage);
         Label.LabelStyle labelStyle = new Label.LabelStyle();
@@ -52,7 +54,7 @@ public class Instructions extends Group {
         addActor(table);
         Image exitButton = new Image(assests.manager.get(Assests.exitButton));
         exitButton.setPosition(-width / 12.5f, (float) (height - (0.13 * height)));
-        exitButton.setTouchable(Touchable.childrenOnly.enabled);
+        exitButton.setTouchable(Touchable.enabled);
         exitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
