@@ -9,13 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
 import java.util.ArrayList;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.Utility.MyActor;
@@ -37,6 +35,7 @@ public class ScoreBoard extends Group {
     float row_gap = 0.0f;
     ArrayList<Integer> playerscore = new ArrayList<>();
     private final ScheduledThreadPoolExecutor asyncTaskExecutor = new ScheduledThreadPoolExecutor(1);
+
     public ScoreBoard() {
 
     }
