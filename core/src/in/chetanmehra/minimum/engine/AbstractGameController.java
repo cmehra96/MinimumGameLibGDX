@@ -9,6 +9,7 @@ import in.chetanmehra.minimum.CardElements.Card;
 import in.chetanmehra.minimum.CardElements.Deck;
 import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.Players.Player;
+import in.chetanmehra.minimum.Screens.SubScreens.ScoreBoard;
 
 public abstract class AbstractGameController {
     protected Assests assests;
@@ -20,14 +21,16 @@ public abstract class AbstractGameController {
     protected Player mainPlayer;
     protected ArrayList<Player> players;
     protected int currentPlayerIndex = 0;
-    //protected ScoreBoard scoreBoard;
+    protected ScoreBoard scoreBoard;
 
-    public AbstractGameController(Camera camera, Assests assests) {
+    public AbstractGameController(Camera camera, Assests assests, ScoreBoard scoreBoard) {
         this.camera = camera;
         this.assests = assests;
         this.dealtDeck = new Deck(assests);
         dealtDeck.allocateDeck();
         this.discardedDeck = new Deck(assests);
+        this.scoreBoard = scoreBoard;
+
     }
 
     public abstract void mainPlayerCardTapped(int cardindex, boolean longPressed);

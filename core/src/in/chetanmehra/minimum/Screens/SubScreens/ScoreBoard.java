@@ -13,6 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
+import java.util.ArrayList;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.Utility.MyActor;
 
@@ -31,7 +35,8 @@ public class ScoreBoard extends Group {
     float scoreboard_endingY = 0.0f;
     float coloumn_gap = 0.0f;
     float row_gap = 0.0f;
-
+    ArrayList<Integer> playerscore = new ArrayList<>();
+    private final ScheduledThreadPoolExecutor asyncTaskExecutor = new ScheduledThreadPoolExecutor(1);
     public ScoreBoard() {
 
     }
@@ -83,10 +88,15 @@ public class ScoreBoard extends Group {
 
     }
 
+    public void setPlayerscore(ArrayList<Integer> playerscore) {
+        this.playerscore = playerscore;
+    }
+
     public void load() {
         Gdx.app.log("ScoreBoardClass", "load method");
         //addAction(Actions.moveTo(200.0f, 200.0f, 0.3f));
         if (!isVisible) {
+
             setVisible(true);
             Gdx.app.log("ScoreBoardClass", "inside if condition");
             toFront();
@@ -94,5 +104,16 @@ public class ScoreBoard extends Group {
         }
         isVisible = false;
         setVisible(false);
+    }
+
+    public void addScoreRow(ArrayList<Integer> playerRoundScore, int roundCounter) {
+        int currentrow = 2 + roundCounter;
+        addActor(new MyActor((float) (scoreboard_startingX + coloumn_gap / 4), (float) (scoreboard_endingY - currentrow * row_gap), playerRoundScore.get(0).toString(), 24, Color.WHITE));
+        addActor(new MyActor((float) (scoreboard_startingX + coloumn_gap), (float) (scoreboard_endingY - currentrow * row_gap), playerRoundScore.get(1).toString(), 24, Color.WHITE));
+        addActor(new MyActor((float) (scoreboard_startingX + 2 * coloumn_gap), (float) (scoreboard_endingY - currentrow * row_gap), playerRoundScore.get(2).toString(), 24, Color.WHITE));
+        addActor(new MyActor((float) (scoreboard_startingX + 3 * coloumn_gap), (float) (scoreboard_endingY - currentrow * row_gap), playerRoundScore.get(3).toString(), 24, Color.WHITE));
+        addActor(new MyActor((float) (scoreboard_startingX + 4 * coloumn_gap), (float) (scoreboard_endingY - currentrow * row_gap), playerRoundScore.get(4).toString(), 24, Color.WHITE));
+        addActor(new MyActor((float) (scoreboard_startingX + 5 * coloumn_gap), (float) (scoreboard_endingY - currentrow * row_gap), playerRoundScore.get(5).toString(), 24, Color.WHITE));
+
     }
 }

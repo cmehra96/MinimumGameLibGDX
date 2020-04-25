@@ -14,6 +14,7 @@ import in.chetanmehra.minimum.GameHelpers.Assests;
 import in.chetanmehra.minimum.GameHelpers.CurrentGameState;
 import in.chetanmehra.minimum.Players.AIPlayer;
 import in.chetanmehra.minimum.Players.Player;
+import in.chetanmehra.minimum.Screens.SubScreens.ScoreBoard;
 import in.chetanmehra.minimum.listeners.PlayerEventsListener;
 
 public class GameController extends AbstractGameController {
@@ -28,8 +29,8 @@ public class GameController extends AbstractGameController {
     private int roundCounter = 0;
     private boolean isShowScoreCard = false;
 
-    public GameController(Camera camera, Assests assests) {
-        super(camera, assests);
+    public GameController(Camera camera, Assests assests, ScoreBoard scoreBoard) {
+        super(camera, assests, scoreBoard);
 
     }
 
@@ -318,10 +319,19 @@ public class GameController extends AbstractGameController {
 
         Gdx.app.log(TAG, "Winner of this round " + winnerPlayer.getName());
         isShowDownCalled = true;
+        ArrayList<Integer> playerRoundScore = new ArrayList<>();
+        for (Player player :
+                players) {
+            playerRoundScore.add(player.getPreviousRoundScore());
+
+
+        }
+        scoreBoard.addScoreRow(playerRoundScore, roundCounter);
         isShowScoreCard = true;
         asyncTaskExecutor.schedule(new Runnable() {
             @Override
             public void run() {
+                scoreBoard.setVisible(false);
                 startNextRound();
                 switchTurnToNextPlayer(true);
             }

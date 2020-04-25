@@ -50,8 +50,9 @@ public class GamePlayScreen extends AbstractScreen {
         stage2 = new Stage(viewport);
         stage3 = new Stage(viewport);
         gameDrawer = new GameDrawer(batch, assests);
-        gameController = new GameController(camera, assests);
         scoreBoard = new ScoreBoard(viewport, camera, batch, assests);
+        gameController = new GameController(camera, assests, scoreBoard);
+
         // scoreBoard = new ScoreBoard(stage3, this.assests);
         //gameController.setScoreBoard(scoreBoard);
 
